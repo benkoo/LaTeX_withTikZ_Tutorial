@@ -7,7 +7,7 @@ PDF=$(MAIN).pdf
 
 all: $(PDF)
 
-$(PDF): $(TEXSRC) bibliography.bib
+$(PDF): $(TEXSRC) .author_info.tex bibliography.bib
 	$(TEX) $(MAIN).tex
 	$(BIBTEX) $(MAIN) || true
 	$(TEX) $(MAIN).tex

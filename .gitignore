@@ -20,18 +20,21 @@
 *.ist
 *.fls
 *.fdb_latexmk
-
-# PDF files
-*.pdf
-
-# SyncTeX files
 *.synctex.gz
 
-# Backup files
+# PDF and DVI output
+*.pdf
+*.dvi
+*.ps
+
+# Backup and temp files
 *~
 *.bak
+*.swp
 
-# Editor-specific files
+# Editor directories
 .vscode/
 .idea/
-*.swp
+
+# Author info (private)
+.author_info.tex
