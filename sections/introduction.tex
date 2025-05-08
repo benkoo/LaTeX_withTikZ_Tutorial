@@ -1,6 +1,10 @@
 \sectionheader{Introduction}
 
-Petri Nets are a powerful mathematical modeling language used for the description of distributed systems \cite{murata1989petri}. They provide a graphical notation for stepwise processes that include choice, iteration, and concurrent execution. As a modeling language, Petri Nets offer a way to visually represent the structure of a distributed system as a directed bipartite graph with annotations.
+We propose a novel synthesis of Petri Nets and tensor algebra, arguing that Petri Nets can leverage the mathematical formalism of tensors to represent topologically related operands and their interactions. Drawing on David Spivak’s theory of polynomial functors, we introduce the concept of a Tensorized Petri Net, where each element can act simultaneously as an operand and an operator. We illustrate this framework using digit-wise arithmetic, showing how it enables compositional, interpretable, and parallelizable symbolic computation.
+
+Petri Nets are a foundational tool for modeling distributed and concurrent systems, providing a graphical and mathematical language for representing state, transitions, and resource flow. Traditionally, Petri Nets are used to model discrete events and token flows, but recent advances in neural-symbolic computation and category theory suggest new ways to enrich their expressive power.
+
+In this work, we argue that Petri Nets can be “tensorized”—that is, their places, transitions, and token flows can be represented and manipulated using tensor algebra. This enables the explicit modeling of topological relationships among operands, such as those found in digit-wise arithmetic or spatially structured data. Furthermore, by leveraging David Spivak’s ideas on polynomial functors, we can treat every element in the net as both an operand and an operator, capturing higher-order compositionality and self-similarity.
 
 The main components of Petri Nets include:
 \begin{itemize}

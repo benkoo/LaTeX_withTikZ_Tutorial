@@ -1,6 +1,31 @@
 \sectionheader{Methodology}
 \label{sec:methodology}
 
+\subsection{Tensorized Petri Nets via Polynomial Functors}
+
+\subsubsection{Tensor Representation of Petri Nets}
+
+\begin{itemize}
+    \item \textbf{Places as Tensor Indices:} Each place in a Petri Net corresponds to an index in a tensor, representing a position (e.g., a digit in a number, or a cell in a grid).
+    \item \textbf{Tokens as Tensor Entries:} The state of the net is encoded as a tensor, with entries indicating the presence or value of tokens at each place.
+    \item \textbf{Transitions as Tensor Operations:} Transitions correspond to multilinear maps or contractions, updating the tensor state according to the net’s rules.
+\end{itemize}
+
+\subsubsection{Polynomial Functors for Compositionality}
+
+\begin{itemize}
+    \item \textbf{Elements as Operators and Operands:} Inspired by polynomial functors, each element (place or transition) can act as both an operand (receiving tokens) and an operator (transforming tokens).
+    \item \textbf{Functorial Structure:} The wiring of the Petri Net encodes a functorial mapping from input tensors (operands) to output tensors (results), supporting modular and hierarchical composition.
+\end{itemize}
+
+\subsubsection{Example: Digit-wise Arithmetic}
+
+\begin{itemize}
+    \item \textbf{Digit Positions as Places:} Each digit position in a number is a place in the Petri Net.
+    \item \textbf{Carry and Sum as Transitions:} Transitions implement digit-wise addition, carry propagation, and modular reduction, all as tensor operations.
+    \item \textbf{Topological Relationships:} The tensor structure captures the adjacency of digits and the flow of carries, enabling parallel and interpretable computation.
+\end{itemize}
+
 \subsection{Problem Definition}
 
 [Define the specific problem you are addressing with your Petri Net model]
