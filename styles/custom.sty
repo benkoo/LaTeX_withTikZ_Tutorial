@@ -1,0 +1,57 @@
+\ProvidesPackage{custom}
+
+% Define colors for Petri nets
+\definecolor{placecolor}{RGB}{220,220,220}
+\definecolor{transitioncolor}{RGB}{200,200,200}
+\definecolor{tokencolor}{RGB}{0,0,0}
+
+% Custom TikZ styles for Petri nets
+\tikzset{
+    place/.style={
+        circle,
+        draw=black,
+        thick,
+        minimum size=6mm,
+        fill=placecolor
+    },
+    transition/.style={
+        rectangle,
+        draw=black,
+        thick,
+        fill=transitioncolor,
+        minimum height=8mm,
+        minimum width=2mm
+    },
+    token/.style={
+        circle,
+        draw=black,
+        fill=tokencolor,
+        minimum size=1.5mm,
+        inner sep=0pt
+    },
+    pre/.style={
+        ->,
+        thick,
+        >=stealth
+    },
+    post/.style={
+        ->,
+        thick,
+        >=stealth
+    }
+}
+
+% Custom command for creating a place with tokens
+\newcommand{\placewithtokens}[3]{
+    \node[place] (#1) at (#2) {};
+    \ifnum#3>0
+        \ifnum#3=1
+            \node[token] at (#1) {};
+        \else
+            \node at (#1) {#3};
+        \fi
+    \fi
+}
+
+% Custom command for section headers
+\newcommand{\sectionheader}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}

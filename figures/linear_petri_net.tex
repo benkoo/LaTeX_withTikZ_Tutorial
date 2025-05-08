@@ -1,0 +1,18 @@
+\begin{tikzpicture}[every place/.style={minimum size=10mm}, node distance=1.7cm]
+  % Places
+  \node[place] (A) {$A$};
+  \node[transition] (fa) [right of=A] {$f_1^X$};
+  \node[place] (B) [right of=fa] {$B$};
+  \node[transition] (fb) [right of=B] {$f_b$};
+  \node[place] (C) [right of=fb] {$C$};
+  \node[transition] (fc) [right of=C] {$f_c$};
+  \node[place] (Y) [right of=fc] {$Y$};
+
+  % Arcs
+  \draw[->] (A) -- (fa);
+  \draw[->] (fa) -- (B);
+  \draw[->] (B) -- (fb);
+  \draw[->] (fb) -- (C);
+  \draw[->] (C) -- (fc);
+  \draw[->] (fc) -- (Y);
+\end{tikzpicture}

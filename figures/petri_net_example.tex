@@ -1,0 +1,47 @@
+\begin{tikzpicture}[node distance=1.5cm and 2.5cm, >=stealth, bend angle=45, auto] % Adjusted default node distances
+
+% Define places with new coordinates for better layout
+\placewithtokens{p1}{0,0}{2}        % Resource
+\placewithtokens{p2}{5,0}{0}        % Process
+\placewithtokens{p3}{2.5,-2.5}{1}    % Control
+\placewithtokens{p4}{7.5,-2.5}{0}    % Output
+\placewithtokens{p5}{2.5,-5.5}{0}    % Complete
+
+% Define transitions with new coordinates
+\node[transition] (t1) at (2.5,0) {};   % Start (between P1 and P2, above P3)
+\node[transition] (t2) at (5,-2.5) {};  % Execute (between P2 and P4, aligned with P3)
+\node[transition] (t3) at (1,-4) {};    % Cancel (below and to the left of P3, leading to P5)
+\node[transition] (t4) at (4,-4) {};    % Finish (below and to the right of P3, or below T2, leading to P5)
+
+% Define arcs (connections remain logically the same)
+\draw[pre] (p1) -- (t1);
+\draw[post] (t1) -- (p2);
+\draw[pre] (p3) -- (t1);    % P3 is an input to T1
+\draw[post] (t1) -- (p3);   % T1 returns a token to P3 (maintains control token)
+
+\draw[pre] (p2) -- (t2);
+\draw[pre] (p3) -- (t2);    % P3 is also an input to T2
+\draw[post] (t2) -- (p4);
+
+\draw[pre] (p3) -- (t3);
+\draw[post] (t3) -- (p5);
+
+\draw[pre] (p4) -- (t4);
+\draw[post] (t4) -- (p5);
+
+% Add labels (node anchors ensure they are placed relative to the node)
+\node[above] at (p1.north) {Resource};
+\node[above] at (p2.north) {Process};
+\node[left] at (p3.west) {Control}; % Adjusted to left to avoid overlap with T1-P3 arc
+\node[above] at (p4.north) {Output}; % Adjusted to above for consistency
+\node[below] at (p5.south) {Complete};
+
+\node[above] at (t1.north) {Start};
+\node[above] at (t2.north) {Execute}; % Adjusted to above
+\node[left] at (t3.west) {Cancel};
+\node[right] at (t4.east) {Finish};
+
+% Add a title
+\node[above=1cm of p1.north -| t1.north] {Petri Net Model of a Simple Workflow Process}; % Position title relative to top elements
+
+\end{tikzpicture}

@@ -1,0 +1,28 @@
+\begin{tikzpicture}[every place/.style={minimum size=10mm}, node distance=1.7cm and 2.2cm]
+  % First digit addition
+  \node[place] (a1) {$a_1$};
+  \node[place, below of=a1] (b1) {$b_1$};
+  \node[place, below of=b1] (c0) {$c_0$};
+  \node[transition] (add1) [right of=b1, yshift=1.1cm] {$+_1$};
+  \node[place] (s1) [right of=add1, yshift=0.8cm] {$s_1$};
+  \node[place] (c1) [below of=s1] {$c_1$};
+
+  \draw[->] (a1) -- (add1);
+  \draw[->] (b1) -- (add1);
+  \draw[->] (c0) -- (add1);
+  \draw[->] (add1) -- (s1);
+  \draw[->] (add1) -- (c1);
+
+  % Second digit addition
+  \node[place, below of=c1] (a2) {$a_2$};
+  \node[place, below of=a2] (b2) {$b_2$};
+  \node[transition] (add2) [right of=b2, yshift=1.1cm] {$+_2$};
+  \node[place] (s2) [right of=add2, yshift=0.8cm] {$s_2$};
+  \node[place] (c2) [below of=s2] {$c_2$};
+
+  \draw[->] (a2) -- (add2);
+  \draw[->] (b2) -- (add2);
+  \draw[->] (c1) -- (add2);
+  \draw[->] (add2) -- (s2);
+  \draw[->] (add2) -- (c2);
+\end{tikzpicture}

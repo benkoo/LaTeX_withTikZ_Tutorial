@@ -1,0 +1,73 @@
+% Petri Net Model of the Dining Philosophers Problem (Refined)
+\begin{tikzpicture}[node distance=2.2cm and 2.2cm, >=stealth, bend angle=30, auto, on grid]
+    % Philosopher thinking states
+    \placewithtokens{p1}{0,0}{1}
+    \placewithtokens{p2}{3,0}{1}
+    \placewithtokens{p3}{1.5,-2.6}{1}
+
+    % Philosopher eating states
+    \placewithtokens{e1}{-1.2,-1.5}{0}
+    \placewithtokens{e2}{4.2,-1.5}{0}
+    \placewithtokens{e3}{1.5,-4.1}{0}
+
+    % Forks
+    \placewithtokens{f1}{0,-1.5}{1}
+    \placewithtokens{f2}{3,-1.5}{1}
+    \placewithtokens{f3}{1.5,-1.5}{1}
+
+    % Transitions (pick up forks)
+    \node[transition, rounded corners=2pt] (t1) [below left=0.7cm and 0.7cm of p1] {};
+    \node[transition, rounded corners=2pt] (t2) [below right=0.7cm and 0.7cm of p2] {};
+    \node[transition, rounded corners=2pt] (t3) [below=0.7cm of p3] {};
+
+    % Transitions (put down forks)
+    \node[transition, rounded corners=2pt] (r1) [left=1.2cm of e1] {};
+    \node[transition, rounded corners=2pt] (r2) [right=1.2cm of e2] {};
+    \node[transition, rounded corners=2pt] (r3) [below=1.2cm of e3] {};
+
+    % Arcs for Philosopher 1
+    \draw[pre] (p1) -- (t1);
+    \draw[pre] (f1) -- (t1);
+    \draw[pre] (f3) -- (t1);
+    \draw[post] (t1) -- (e1);
+    \draw[pre] (e1) -- (r1);
+    \draw[post] (r1) -- (p1);
+    \draw[post] (r1) -- (f1);
+    \draw[post] (r1) -- (f3);
+
+    % Arcs for Philosopher 2
+    \draw[pre] (p2) -- (t2);
+    \draw[pre] (f2) -- (t2);
+    \draw[pre] (f3) -- (t2);
+    \draw[post] (t2) -- (e2);
+    \draw[pre] (e2) -- (r2);
+    \draw[post] (r2) -- (p2);
+    \draw[post] (r2) -- (f2);
+    \draw[post] (r2) -- (f3);
+
+    % Arcs for Philosopher 3
+    \draw[pre] (p3) -- (t3);
+    \draw[pre] (f1) -- (t3);
+    \draw[pre] (f2) -- (t3);
+    \draw[post] (t3) -- (e3);
+    \draw[pre] (e3) -- (r3);
+    \draw[post] (r3) -- (p3);
+    \draw[post] (r3) -- (f1);
+    \draw[post] (r3) -- (f2);
+
+    % Labels for philosophers
+    \node[above] at (p1.north) {P1 thinking};
+    \node[above] at (p2.north) {P2 thinking};
+    \node[below] at (p3.south) {P3 thinking};
+    \node[left] at (e1.west) {P1 eating};
+    \node[right] at (e2.east) {P2 eating};
+    \node[below] at (e3.south) {P3 eating};
+
+    % Labels for forks
+    \node[below left] at (f1.south west) {Fork 1};
+    \node[below right] at (f2.south east) {Fork 2};
+    \node[above] at (f3.north) {Fork 3};
+
+    % Title
+    \node[above=1cm] at (current bounding box.north) {Petri Net Model of the Dining Philosophers Problem};
+\end{tikzpicture}

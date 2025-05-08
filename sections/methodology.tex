@@ -1,0 +1,69 @@
+\sectionheader{Methodology}
+\label{sec:methodology}
+
+\subsection{Problem Definition}
+
+[Define the specific problem you are addressing with your Petri Net model]
+
+\subsection{Proposed Petri Net Model}
+
+Our proposed Petri Net model for [specific system or process] consists of the following components:
+
+\begin{itemize}
+    \item \textbf{Places}: Represent [specific states or conditions in your system]
+    \item \textbf{Transitions}: Represent [specific events or actions in your system]
+    \item \textbf{Tokens}: Represent [specific resources or entities in your system]
+\end{itemize}
+
+Figure \ref{fig:petri_net_generic_model} shows a generic structure of our Petri Net model.
+\begin{figure}[htbp]
+\centering
+\input{figures/petri_net_example}
+\caption{Generic Petri Net model structure for [specific system or process]}
+\label{fig:petri_net_generic_model} % Changed label for clarity
+\end{figure}
+
+To illustrate common concurrency problems that can be modeled with Petri Nets, we present the Dining Philosophers problem (Figure \ref{fig:dining_philosophers}) and the Producer-Consumer problem (Figure \ref{fig:producer_consumer}).
+
+\begin{figure*}[htbp]
+\centering
+\input{figures/dining_philosophers}
+\caption{Petri Net model of the Dining Philosophers problem}
+\label{fig:dining_philosophers}
+\end{figure*}
+
+\begin{figure}[htbp]
+\centering
+\input{figures/linear_petri_net}
+\caption{A linear Petri Net example.}
+\label{fig:linear_petri_net}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\input{figures/carry_arithmetic_feedback}
+\caption{Carry Arithmetic as Feedback System.}
+\label{fig:carry_arithmetic_feedback}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\input{figures/producer_consumer}
+\caption{Petri Net model of the Producer-Consumer problem}
+\label{fig:producer_consumer}
+\end{figure}
+
+\subsection{Model Analysis}
+
+To analyze the properties of our Petri Net model, we examine:
+
+\begin{itemize}
+    \item \textbf{Reachability}: Determining whether a specific marking can be reached from the initial marking.
+    \item \textbf{Boundedness}: Ensuring that the number of tokens in each place does not exceed a finite bound.
+    \item \textbf{Liveness}: Verifying that the model is free from deadlocks.
+    \item \textbf{Fairness}: Ensuring that all enabled transitions eventually fire.
+\end{itemize}
+
+\subsection{Implementation}
+
+[Describe the tools or methods used to implement and analyze your Petri Net model]

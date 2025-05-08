@@ -1,0 +1,33 @@
+% Petri Net Model of the Producer-Consumer Problem (Refined)
+\begin{tikzpicture}[node distance=2.2cm and 2.2cm, >=stealth, bend angle=30, auto, on grid]
+    % Places
+    \placewithtokens{producer}{0,0}{1}
+    \placewithtokens{buffer}{2.8,0}{0}
+    \placewithtokens{consumer}{5.6,0}{1}
+    \placewithtokens{bufferCapacity}{2.8,-2.2}{3}
+
+    % Transitions
+    \node[transition, rounded corners=2pt] (produce) [right=of producer] {};
+    \node[transition, rounded corners=2pt] (consume) [right=of buffer] {};
+
+    % Arcs
+    \draw[pre] (producer) -- (produce);
+    \draw[post] (produce) -- (producer);
+    \draw[post] (produce) -- (buffer);
+    \draw[pre] (buffer) -- (consume);
+    \draw[pre] (consumer) -- (consume);
+    \draw[post] (consume) -- (consumer);
+    \draw[pre] (bufferCapacity) -- (produce);
+    \draw[post] (consume) -- (bufferCapacity);
+
+    % Labels
+    \node[above] at (producer.north) {Producer};
+    \node[above] at (buffer.north) {Buffer};
+    \node[above] at (consumer.north) {Consumer};
+    \node[below] at (bufferCapacity.south) {Buffer Capacity};
+    \node[above] at (produce.north) {Produce};
+    \node[above] at (consume.north) {Consume};
+
+    % Title
+    \node[above=1cm] at (current bounding box.north) {Petri Net Model of the Producer-Consumer Problem};
+\end{tikzpicture}
