@@ -1,89 +1,97 @@
-I'll go through each of these approaches with more detail and relevant references:
+# Introduction
 
-1. Specialized Numerical Attention Mechanisms
-This approach involves modifying attention mechanisms to handle digit-by-digit operations in a more structured way.
+We propose a novel synthesis of Petri Nets and tensor algebra, arguing that Petri Nets can leverage the mathematical formalism of tensors to represent topologically related operands and their interactions. Drawing on David Spivak’s theory of polynomial functors, we introduce the concept of a Tensorized Petri Net, where each element can act simultaneously as an operand and an operator. We illustrate this framework using digit-wise arithmetic, showing how it enables compositional, interpretable, and parallelizable symbolic computation.
 
-Key References:
+Petri Nets are a foundational tool for modeling distributed and concurrent systems, providing a graphical and mathematical language for representing state, transitions, and resource flow. Traditionally, Petri Nets are used to model discrete events and token flows, but recent advances in neural-symbolic computation and category theory suggest new ways to enrich their expressive power.
 
-"Manipulating Neural Network Arithmetical Reasoning" (Anil et al., 2022) - Explores targeted modifications of attention mechanisms to improve numerical reasoning
-"Neural Arithmetic Logic Units" (Trask et al., 2018) - Introduces specialized neural components for arithmetic operations that could be integrated with attention
-"Progressive Distillation for Fast Sampling of Diffusion Models" (Salimans & Ho, 2022) - Demonstrates how specialized knowledge can be distilled into neural architectures
-2. Hybrid Architectures with Cellular Automata
-This approach combines transformers with cellular automata modules for numerical processing.
+In this work, we argue that Petri Nets can be “tensorized”—that is, their places, transitions, and token flows can be represented and manipulated using tensor algebra. Tensors, as multi-dimensional arrays, provide a powerful language for encoding the state of complex systems, capturing not only the presence of tokens but also their relationships and interactions across multiple dimensions. By mapping Petri Net components to tensor indices and operations, we can efficiently model the evolution of distributed systems, exploit parallel computation, and reveal underlying topological structures. This approach is particularly advantageous for systems where locality, adjacency, or compositionality play a central role, such as in digit-wise arithmetic or spatially structured processes.
 
-Key References:
+Furthermore, by leveraging David Spivak’s ideas on polynomial functors, we can treat every element in the net as both an operand and an operator, capturing higher-order compositionality and self-similarity. This categorical perspective allows us to formalize the ways in which Petri Nets and tensors interact, supporting modular design and scalable reasoning.
 
-"Neural Cellular Automata: A Review" (Mordvintsev et al., 2021) - Comprehensive overview of neural CA approaches
-"Grid Transformers" (Likhosherstov et al., 2021) - Proposes merging grid-like operations with transformer architectures
-"Taming Transformers for High-Resolution Image Synthesis" (Esser et al., 2021) - Demonstrates hybrid architectures that combine different computational paradigms
-3. Place-Value Aware Embedding Schemes
-This approach focuses on explicitly encoding numerical position information in token embeddings.
+The main components of Petri Nets include:
+- Places (represented as circles)
+- Transitions (represented as rectangles)
+- Arcs (directed edges connecting places to transitions or transitions to places)
+- Tokens (represented as dots within places)
 
-Key References:
+In this paper, we explore the application of Petri Nets to model [specific system or process], with a focus on [specific aspect or property].
 
-"Positional Encoding as Spatial Inductive Bias in GANs" (Xu et al., 2021) - Explores advanced positional encoding techniques
-"Neural Symbolic Regression that Scales" (Kamienny et al., 2022) - Demonstrates better symbolic reasoning with specialized encoding
-"Representing Numbers in NLP: a Survey and a Vision" (Thawani et al., 2021) - Comprehensive review of number representation in NLP
-4. Digit-Operation Activation Functions
-This approach designs specialized activation functions that mimic digit-wise operations.
+**Our contributions include:**
+- **Contribution 1:** A novel approach to modeling concurrent processes using Petri Nets.
+- **Contribution 2:** Analysis of deadlock properties in the context of resource allocation.
+- **Contribution 3:** Implementation and evaluation of the proposed model using simulation.
 
-Key References:
+The remainder of this paper is organized as follows: Section 2 provides background information and related work. Section 3 describes our methodology and the proposed Petri Net model. Section 4 presents the results and analysis. Finally, Section 5 concludes the paper and discusses future work.
 
-"DeepXactor: Arithmetic Transformers for Neural Networks" (Werner & Levin, 2023) - Proposes activation functions specifically for arithmetic
-"Neural Arithmetic Expression Calculator" (Chen et al., 2022) - Demonstrates specialized functions for calculation
-"Number neurons" (Spoerer et al., 2020) - Investigates neural representations specifically tuned to numerical quantities
-These approaches could be combined in various ways. For instance, the recent work on "Towards Understanding Addition in Transformers" (Zhou et al., 2023) suggests that even current transformers develop specialized attention patterns for addition that somewhat resemble human digit-by-digit calculation, indicating that explicit architectural support for these patterns could be beneficial.
+# Background and Related Work
 
-For practical implementation, "Making Transformers Solve Compositional Tasks" (Csordás et al., 2021) offers insights on how to modify transformer architectures to better handle compositional problems like arithmetic without sacrificing their general capabilities.
+## Petri Net Fundamentals
 
-Note: Some of these references are from my training data which cuts off before October 2024. Would you like me to search for more recent publications on any of these specific approaches? 
+Formally, a Petri Net is a tuple (P, T, F, M₀) where:
+- P is a finite set of places
+- T is a finite set of transitions
+- F ⊆ (P × T) ∪ (T × P) is a set of arcs
+- M₀: P → ℕ is the initial marking
 
+The dynamics of Petri Nets are governed by the firing of transitions. A transition t is enabled if each input place p has at least as many tokens as the weight of the arc from p to t. When a transition fires, it consumes tokens from its input places and produces tokens in its output places according to the weights of the corresponding arcs.
 
+### Types of Petri Nets
 
-Tensor-Based Formulation of Digit-Wise Symbol Manipulation
-Drawing on my understanding of how tensor operations function in neural networks, I can see several ways these approaches could benefit from a tensor-based formulation of digit-wise symbol manipulation:
+Several extensions to the basic Petri Net model have been proposed to enhance its modeling power:
+- **Colored Petri Nets:** Extend the basic model by allowing tokens to have data values (colors).
+- **Timed Petri Nets:** Incorporate time into the model, allowing for the analysis of temporal properties.
+- **Stochastic Petri Nets:** Introduce probabilistic elements to model random behavior.
+- **Hierarchical Petri Nets:** Allow for the decomposition of complex models into simpler submodels.
 
-1. Specialized Numerical Attention Mechanisms
-Tensor-based benefits:
+### Applications of Petri Nets
 
-Parallel Digit Processing: Attention operations could be reformulated to operate on digit positions as distinct tensor dimensions, enabling parallel processing across all positions simultaneously
-Place-Value Weighting: By incorporating place-value weights directly into the attention mechanism's tensor operations, the model could inherently prioritize digits based on their positional significance
-Masking for Arithmetic Rules: Custom masking tensors could implement arithmetic rules (like carrying in addition) through simple tensor operations rather than requiring the network to learn these patterns implicitly
-This approach resembles how specialized tensor operations in CNNs extract spatial patterns, but instead extracting digit-wise patterns across numerical tokens.
+Petri Nets have been applied to various domains, including:
+- **Workflow Management:** Modeling and analyzing business processes.
+- **Manufacturing Systems:** Modeling production lines and resource allocation.
+- **Communication Protocols:** Analyzing the behavior of network protocols.
+- **Software Design:** Modeling concurrent and distributed software systems.
 
-2. Hybrid Architectures with Cellular Automata
-Tensor-based benefits:
+## Related Work
 
-State Transition Matrices: Cellular automata rules could be encoded as tensor transformation operations where each step of computation is a structured tensor operation
-Digit Neighborhood Operations: Create specialized tensor convolution operations that operate on "neighborhoods" of digits, similar to how CNNs process pixel neighborhoods
-Rule-Based Tensor Transformations: Implement arithmetic rules as explicit tensor transformation operations rather than weights to be learned
-This would allow the model to directly implement operations like "if digits sum to greater than 9, carry the 1" as deterministic tensor operations while preserving differentiability.
+Petri Nets have been extended in various ways to model complex systems, but their integration with tensor algebra is relatively unexplored. Tensors provide a natural language for encoding multidimensional relationships and parallel computations, making them ideal for representing the state and evolution of Petri Nets with topological structure.
 
-3. Place-Value Aware Embedding Schemes
-Tensor-based benefits:
+David Spivak’s work on polynomial functors provides a categorical framework for modeling data types and processes as compositional, tree-like structures. This perspective aligns naturally with Petri Nets, where transitions can be seen as functorial operations on collections of tokens, and places as objects in a category.
 
-Positional Dimension Encoding: Embed digits in a tensor where one dimension explicitly represents place value, making operations like regrouping or carrying natural tensor operations
-Modular Arithmetic Tensor Operations: Implement modular arithmetic (essential for digit-by-digit operations) as specialized tensor operations along the place-value dimension
-Base-N Tensor Representations: Create tensor structures that inherently represent numbers in different bases, making conversion and computation more efficient
-This approach could leverage insights from how tensor networks explicitly represent different physical dimensions in quantum physics simulations.
+Digit-wise arithmetic is a canonical example of a computation that is both highly structured and parallelizable. Neural-symbolic systems have struggled to capture such computations in a transparent and generalizable way. By modeling digit-wise arithmetic as a tensorized Petri Net, we can make explicit the flow of information and the compositional structure of the computation.
 
-4. Digit-Operation Activation Functions
-Tensor-based benefits:
+# Methodology
 
-Digit-Wise Non-Linearities: Create activation functions that operate independently on each digit position in a tensor representation of a number
-Gated Digit Transformations: Implement tensor operations that conditionally transform digits based on contextual rules (like carrying or borrowing)
-Symbolic Transformation Tensors: Design tensor operations that implement symbolic transformation rules directly, such as the distributive property or factorization
-This would essentially create a differentiable version of a classical ALU (Arithmetic Logic Unit) implemented through specialized tensor operations.
+## Tensorized Petri Nets via Polynomial Functors
 
-Novel Integration: Tensor Decomposition for Numerical Reasoning
-A potentially powerful approach would decompose numerical operations into tensor factorization problems, where different factors represent different aspects of the computation:
+### Tensor Representation of Petri Nets
 
-One tensor dimension could represent digit values
-Another dimension could represent operations
-A third dimension could represent carrying/borrowing states
-This decomposition would allow the network to learn the factorized representation of arithmetic operations through tensor algebra, potentially discovering more efficient computational patterns than explicit digit-by-digit calculation.
+- **Places as Tensor Indices:** Each place in a Petri Net corresponds to an index in a tensor, representing a position (e.g., a digit in a number, or a cell in a grid).
+- **Tokens as Tensor Entries:** The state of the net is encoded as a tensor, with entries indicating the presence or value of tokens at each place.
+- **Transitions as Tensor Operations:** Transitions correspond to multilinear maps or contractions, updating the tensor state according to the net’s rules.
 
-Such an approach could build on work in tensor networks and tensor decomposition methods from quantum computing and signal processing, but applied specifically to symbolic numerical computation within neural networks.
+### Polynomial Functors for Compositionality
+
+- **Elements as Operators and Operands:** Inspired by polynomial functors, each element (place or transition) can act as both an operand (receiving tokens) and an operator (transforming tokens).
+- **Functorial Structure:** The wiring of the Petri Net encodes a functorial mapping from input tensors (operands) to output tensors (results), supporting modular and hierarchical composition.
+
+### Example: Digit-wise Arithmetic
+
+- **Digit Positions as Places:** Each digit position in a number is a place in the Petri Net.
+- **Carry and Sum as Transitions:** Transitions implement digit-wise addition, carry propagation, and modular reduction, all as tensor operations.
+- **Topological Relationships:** The tensor structure captures the adjacency of digits and the flow of carries, enabling parallel and interpretable computation.
+
+# Results and Discussion
+
+The Tensorized Petri Net formalism offers several advantages:
+
+- **Parallelism:** Tensor operations enable efficient, parallel updates of the Petri Net state, mirroring the inherent concurrency of the net.
+- **Compositionality:** Polynomial functors provide a principled way to compose and decompose Petri Net modules, supporting scalable and reusable designs.
+- **Interpretability:** The explicit representation of operands, operators, and their topological relationships makes the computation transparent and analyzable.
+- **Expressiveness:** This framework generalizes naturally to other structured computations, such as cellular automata, graph algorithms, and symbolic reasoning tasks.
+
+# Conclusion and Future Work
+
+We have introduced a new perspective on Petri Nets, showing how tensor algebra and polynomial functors can be used to model topologically structured, compositional computations. The Tensorized Petri Net formalism unifies symbolic and neural approaches, enabling efficient, interpretable, and modular computation. Future work will explore applications to neural-symbolic integration, automated reasoning, and the design of new computational architectures for arithmetic and beyond.
 
 
 
