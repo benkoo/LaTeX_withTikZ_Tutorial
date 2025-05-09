@@ -5,7 +5,7 @@ This repository is designed to help you compile and produce academic papers writ
 ## Features
 
 - **Modular Structure:** The project is organized into sections (e.g., introduction, methodology, results) for easy editing and collaboration.
-- **TikZ Integration:** Includes several example figures and diagrams created using TikZ, demonstrating how to visually represent concepts such as Petri Nets and wiring diagrams.
+- **TikZ Integration:** Includes several example figures and diagrams created using TikZ, demonstrating how to visually represent concepts such as Petri Nets and wiring diagrams. Some diagrams and code examples are adapted from or inspired by content available on the [TikZ.dev](https://tikz.dev) website.
 - **IEEEtran Template:** Uses the IEEEtran document class for professional formatting, suitable for conference and journal submissions.
 - **Automated Build:** A `Makefile` is provided to automate the compilation process, including bibliography generation.
 - **Clean Version Control:** The `.gitignore` file is tailored for LaTeX projects, ensuring that build artifacts and sensitive author information are not tracked.
@@ -47,6 +47,10 @@ This repository is designed to help you compile and produce academic papers writ
 This project is intended for academic and educational use. Please adapt and extend it for your own research papers and reports.
 
 ---
+
+## Acknowledgments
+
+This paper and repository explicitly use information, examples, and diagram code from the [TikZ.dev](https://tikz.dev) website. We thank the TikZ.dev authors and community for providing high-quality documentation and inspiration for TikZ graphics.
 
 For questions or contributions, please open an issue or submit a pull request.
 ```
