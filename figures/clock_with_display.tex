@@ -9,11 +9,11 @@
     \node[bb={0}{2}, fit={($(clock.south west)+(-0.8,-0.5)$) ($(meridiem.north east)+(0.8,0.5)$)}, thick] (container) {};
     
     % Connection from right of Clock to left of Meridiem
-    % Smooth, symmetric S-curve for Clock→Meridiem
+    % Symmetric S-curve for Clock→Meridiem (canonical categorical style)
     \draw
-      ($(clock.east)+(0.2,0)$)
-      .. controls ($(clock.east)+(2.3,1.2)$) and ($(meridiem.west)+(-2.3,-1.2)$)
-      .. ($(meridiem.west)+(-0.2,0)$);
+      (clock.east)
+      .. controls ($(clock.east)+(2,2.8)$) and ($(meridiem.west)+(-2,-2.8)$)
+      .. (meridiem.west);
 
     
     % Connect ports to container edges for outputs
