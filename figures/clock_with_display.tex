@@ -11,15 +11,15 @@
     % Connection from right of Clock to left of Meridiem
     % S-curve with perfectly flat middle and gentle bends for Clock→Meridiem
     % Canonical smooth S-curve with flat middle using a single path
-    \coordinate (midflatR) at (0.9,0);   % right end of flat segment
-    \coordinate (midflatL) at (-0.9,0);  % left end of flat segment
+    \coordinate (midflatR) at (0.8,0);   % right end of flat segment
+    \coordinate (midflatL) at (-0.8,0);  % left end of flat segment
     \draw
       (clock.east)
-        .. controls ($(clock.east)+(1,0)$) and (midflatR) ..
+        .. controls ($(clock.east)+(0.7,0)$) and (midflatR) ..
       (midflatR)
         .. controls (midflatR) and (midflatL) ..
       (midflatL)
-        .. controls (midflatL) and ($(meridiem.west)+(-1,0)$) ..
+        .. controls (midflatL) and ($(meridiem.west)+(-0.7,0)$) ..
       (meridiem.west);
 
     

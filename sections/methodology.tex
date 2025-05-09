@@ -47,7 +47,7 @@ Our proposed Petri Net model for [specific system or process] consists of the fo
 \label{fig:petri_net_generic_model}
 \end{figure}
 
-To illustrate common concurrency problems that can be modeled with Petri Nets, we present the Dining Philosophers problem (Figure \ref{fig:dining_philosophers}) and the Producer-Consumer problem (Figure \ref{fig:producer_consumer}).
+To illustrate common concurrency problems that can be modeled with Petri Nets, we present the Dining Philosophers problem (Figure \ref{fig:dining_philosophers}) and the Producer-Consumer problem (Figure \ref{fig:producer_consumer_workflow}).
 
 \begin{figure*}[htbp]
 \centering
@@ -75,7 +75,7 @@ To illustrate common concurrency problems that can be modeled with Petri Nets, w
 \begin{figure}[htbp]
 \input{figures/producer_consumer}
 \caption{Producer-Consumer Workflow}
-\label{fig:producer_consumer}
+\label{fig:producer_consumer_workflow}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -87,9 +87,9 @@ To illustrate common concurrency problems that can be modeled with Petri Nets, w
 
 \begin{figure}[htbp]
 \centering
-\input{figures/producer_consumer}
-\caption{Petri Net model of the Producer-Consumer problem}
-\label{fig:producer_consumer}
+\resizebox{0.9\columnwidth}{!}{\input{figures/graph}}
+\caption{Example of a complex graph structure with cycles and cross-connections.}
+\label{fig:complex_graph_example}
 \end{figure}
 
 \subsection{Model Analysis}
