@@ -10,17 +10,17 @@
     
     % Connection from right of Clock to left of Meridiem
     % S-curve with perfectly flat middle and gentle bends for Clock→Meridiem
-    % Piecewise S-curve: up from Clock, flat, then C-curve to Meridiem
-    \coordinate (middleR) at (0.9,0);   % right end of the short flat segment
-    \coordinate (middleL) at (-0.9,0);  % left end
-    % 1. Curve from clock.east to right end of middle (vertical tangent at middleR)
-    \draw (clock.east)
-      .. controls ($(clock.east)+(0.7,0)$) and ($(middleR)+(0,0.7)$) .. (middleR);
-    % 2. Flat middle segment
-    \draw (middleR) -- (middleL);
-    % 3. Curve from left end of middle to meridiem.west (vertical tangent at middleL)
-    \draw (middleL)
-      .. controls ($(middleL)+(0,-0.7)$) and ($(meridiem.west)+(-0.7,0)$) .. (meridiem.west);
+    % Canonical smooth S-curve with flat middle using a single path
+    \coordinate (midflatR) at (0.9,0);   % right end of flat segment
+    \coordinate (midflatL) at (-0.9,0);  % left end of flat segment
+    \draw
+      (clock.east)
+        .. controls ($(clock.east)+(1,0)$) and (midflatR) ..
+      (midflatR)
+        .. controls (midflatR) and (midflatL) ..
+      (midflatL)
+        .. controls (midflatL) and ($(meridiem.west)+(-1,0)$) ..
+      (meridiem.west);
 
     
     % Connect ports to container edges for outputs
