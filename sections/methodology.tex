@@ -40,12 +40,11 @@ Our proposed Petri Net model for [specific system or process] consists of the fo
     \item \textbf{Tokens}: Represent [specific resources or entities in your system]
 \end{itemize}
 
-Figure \ref{fig:petri_net_generic_model} shows a generic structure of our Petri Net model.
 \begin{figure}[htbp]
 \centering
 \input{figures/petri_net_example}
 \caption{Generic Petri Net model structure for [specific system or process]}
-\label{fig:petri_net_generic_model} % Changed label for clarity
+\label{fig:petri_net_generic_model}
 \end{figure}
 
 To illustrate common concurrency problems that can be modeled with Petri Nets, we present the Dining Philosophers problem (Figure \ref{fig:dining_philosophers}) and the Producer-Consumer problem (Figure \ref{fig:producer_consumer}).
@@ -57,11 +56,26 @@ To illustrate common concurrency problems that can be modeled with Petri Nets, w
 \label{fig:dining_philosophers}
 \end{figure*}
 
+% First instance of linear_petri_net as a resized figure
 \begin{figure}[htbp]
 \centering
-\resizebox{0.95\columnwidth}{!}{\input{figures/linear_petri_net}}
-\caption{A linear Petri Net example.}
-\label{fig:linear_petri_net}
+\resizebox{0.88\columnwidth}{!}{\input{figures/linear_petri_net}}
+\caption{Resized Linear Petri Net}
+\label{fig:linear_petri_resized}
+\end{figure}
+
+% Second instance as a regular figure
+\begin{figure}[htbp]
+\centering
+\input{figures/linear_petri_net}
+\caption{Tensorized Petri Net Structure}
+\label{fig:tensor_petri}
+\end{figure}
+
+\begin{figure}[htbp]
+\input{figures/producer_consumer}
+\caption{Producer-Consumer Workflow}
+\label{fig:producer_consumer}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -88,6 +102,17 @@ To analyze the properties of our Petri Net model, we examine:
     \item \textbf{Liveness}: Verifying that the model is free from deadlocks.
     \item \textbf{Fairness}: Ensuring that all enabled transitions eventually fire.
 \end{itemize}
+
+\subsection{Wiring Diagram Representation}
+
+Figure \ref{fig:clock_with_display} presents a wiring diagram in the style of David Jaz Myers' work on Dynamical Systems, illustrating the structure of a clock system with display components.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/clock_with_display}
+\caption{Wiring diagram of a clock with display components, showing the meridiem and hour display units.}
+\label{fig:clock_with_display}
+\end{figure}
 
 \subsection{Implementation}
 

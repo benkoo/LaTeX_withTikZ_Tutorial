@@ -1,0 +1,26 @@
+% ClockWithDisplay in Spivak/Fong style using oriented WD
+\begin{tikzpicture}[oriented WD, bbx=1.2cm, bby=2ex, bb min width=2cm, bb port length=4pt, bb port sep=1.5]
+  % Clock and Meridiem boxes with proper ports and more rounded corners
+  % The notation bb={in}{out} specifies number of input and output ports
+  \node[bb={0}{1}, fill=blue!15, thick, rounded corners=4pt] (clock) at (0, -2) {\footnotesize Clock};
+  \node[bb={1}{1}, fill=blue!15, thick, rounded corners=4pt] (meridiem) at (0, 2) {\footnotesize Meridiem};
+  
+  % Container box that encompasses both components with more spacing
+  \node[bb={0}{2}, fit={($(clock.south west)+(-0.8,-0.5)$) ($(meridiem.north east)+(0.8,0.5)$)}, thick] (container) {};
+  
+  % Connect from Clock output to Meridiem input with better curve
+  \draw (clock_out1) to[out=0, in=180, looseness=1.3] (meridiem_in1);
+  
+  % Connect ports to container edges
+  \draw (meridiem_out1) to (container_out1');
+  
+  % External labels with better positioning
+  \node[anchor=west, font=\footnotesize] at ($(container_out1)+(0.2,0)$) {a.m./p.m.};
+  \node[anchor=west, font=\footnotesize] at ($(container_out2)+(0.2,0)$) {Hour};
+  
+  % Connect clock output to container output (for Hour label)
+  \draw (clock_out1) to[out=0, in=180] (container_out2');
+  
+  % Title below container with better spacing
+  \node[font=\normalsize] at ($(container.south)+(0,0.5)$) {ClockWithDisplay};
+\end{tikzpicture}

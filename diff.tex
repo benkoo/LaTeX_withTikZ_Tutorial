@@ -1,0 +1,178 @@
+\documentclass[10pt,twocolumn]{article}
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL main.tex         Thu May  8 20:53:24 2025
+%DIF ADD main_arxiv.tex   Thu May  8 20:55:30 2025
+\usepackage[utf8]{inputenc}
+%DIF 3c3
+%DIF < \usepackage{amsmath,amssymb}
+%DIF -------
+\usepackage{amsmath} %DIF > 
+%DIF -------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{petri,positioning}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+%DIF 9-11d9
+%DIF < \usepackage{booktabs}
+%DIF < \usepackage{float}
+%DIF < \usepackage{enumitem}
+%DIF -------
+
+%DIF < % Load custom style file
+%DIF -------
+\title{\DIFaddbegin \DIFadd{Analysis of Tensorized Petri Nets Using Numerical Reasoning}\DIFaddend } %DIF > 
+%DIF < \usepackage{styles/custom}
+\author{ %DIF > 
+  \DIFaddbegin \DIFadd{Your Name }\\ %DIF > 
+  \DIFadd{Department Name }\\ %DIF > 
+  \DIFadd{Institution Name }\\ %DIF > 
+  \DIFadd{\texttt{email@domain.com} %DIF > 
+}\DIFaddend } %DIF > 
+\date{\DIFaddbegin \today\DIFaddend } %DIF > 
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFaddtex}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdeltex}[1]{{\protect\color{red}\sout{#1}}} %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF HYPERREF PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\texorpdfstring{\DIFaddtex{#1}}{#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{\texorpdfstring{\DIFdeltex{#1}}{}} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+%DIF AMSMATHULEM PREAMBLE %DIF PREAMBLE
+\makeatletter %DIF PREAMBLE
+\let\sout@orig\sout %DIF PREAMBLE
+\renewcommand{\sout}[1]{\ifmmode\text{\sout@orig{\ensuremath{#1}}}\else\sout@orig{#1}\fi} %DIF PREAMBLE
+\makeatother %DIF PREAMBLE
+%DIF COLORLISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+\lstset{extendedchars=\true,inputencoding=utf8}
+
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+\DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < \title{Analysis of [Your Topic] Using Petri Net Models}
+%DIFDELCMD < \author{
+%DIFDELCMD <   John Doe\textsuperscript{1} \and Jane Doe\textsuperscript{2} \\
+%DIFDELCMD <   \small\textsuperscript{1}University of Example \\
+%DIFDELCMD <   \small\textsuperscript{2}Institute of Sample
+%DIFDELCMD < }
+%DIFDELCMD < \date{\today}
+%DIFDELCMD < 
+
+%DIFDELCMD < \input{.author_info.tex}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \maketitle
+
+\DIFdelbegin %DIFDELCMD < \begin{abstract}
+%DIFDELCMD < %%%
+\DIFdel{This paper presents an analysis of }%DIFDELCMD < [%%%
+\DIFdel{specific topic}%DIFDELCMD < ] %%%
+\DIFdel{using Petri Net models. We demonstrate how Petri Nets can be effectively used to model and analyze }%DIFDELCMD < [%%%
+\DIFdel{specific systems or processes}%DIFDELCMD < ]%%%
+\DIFdel{. Our approach combines theoretical foundations with practical applications, providing insights into }%DIFDELCMD < [%%%
+\DIFdel{specific findings}%DIFDELCMD < ]%%%
+\DIFdel{. The results show that }%DIFDELCMD < [%%%
+\DIFdel{brief summary of key results}%DIFDELCMD < ]%%%
+\DIFdel{, which has implications for }%DIFDELCMD < [%%%
+\DIFdel{specific field or application area}%DIFDELCMD < ]%%%
+\DIFdel{.
+}%DIFDELCMD < \end{abstract}
+%DIFDELCMD < 
+
+%DIFDELCMD < \begin{IEEEkeywords}
+%DIFDELCMD < %%%
+\DIFdel{Petri Nets, TikZ, formal modeling, concurrent systems, }%DIFDELCMD < [%%%
+\DIFdel{other keywords}%DIFDELCMD < ]
+%DIFDELCMD < \end{IEEEkeywords}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+%DIF <  Include sections
+\DIFdelend %DIF >  Rest of your existing content from main.tex
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/methodology}
+\input{sections/results}
+\DIFdelbegin %DIFDELCMD < \input{sections/discussion}
+%DIFDELCMD < %%%
+\DIFdelend \input{sections/conclusion}
+
+\DIFdelbegin \DIFdel{// Bibliography
+}\DIFdelend \bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

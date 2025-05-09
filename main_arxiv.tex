@@ -1,33 +1,23 @@
 \documentclass[10pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{petri,positioning}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
-\usepackage{booktabs}
-\usepackage{float}
-\usepackage{enumitem}
+\usepackage{keywords}  % Add this line
 
-% Load custom style file
-\usepackage{styles/custom}
-
-% Load Spivak/Fong TikZ wiring diagram macros
-\input{figures/spivak_fong_wd_macros.tex}
-
-\begin{document}
-
-\title{Analysis of [Your Topic] Using Petri Net Models}
+\title{Analysis of Tensorized Petri Nets Using Numerical Reasoning}
 \author{
-  John Doe\textsuperscript{1} \and Jane Doe\textsuperscript{2} \\
-  \small\textsuperscript{1}University of Example \\
-  \small\textsuperscript{2}Institute of Sample
+  Your Name \\
+  Department Name \\
+  Institution Name \\
+  \texttt{email@domain.com}
 }
 \date{\today}
 
-\input{.author_info.tex}
-
+\begin{document}
 \maketitle
 
 \begin{abstract}
@@ -36,17 +26,14 @@ This paper presents an analysis of [specific topic] using Petri Net models. We d
 \textbf{Keywords:} Petri Nets, TikZ, formal modeling, concurrent systems, [other keywords]
 \end{abstract}
 
-% Include sections
+\keywords{Petri Nets, TikZ, formal modeling, concurrent systems, [other keywords]}
 \input{sections/introduction}
 \input{sections/background}
 \input{sections/methodology}
 \input{sections/results}
-\input{sections/discussion}
 \input{sections/conclusion}
 
-// Bibliography
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
 \end{document}
-\setlength{\columnsep}{0.5in}
