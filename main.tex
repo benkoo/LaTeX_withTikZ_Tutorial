@@ -1,5 +1,8 @@
 \documentclass[10pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
+
+% Fix section numbering format - explicit control of how section numbers appear
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -11,7 +14,9 @@
 
 % Improved URL and bibliography handling
 \usepackage[hyphens]{url}  % Allow URLs to break at hyphens
-\usepackage{hyperref}     % Must come after url package
+
+% Load hyperref with specific settings to fix section numbering in bookmarks
+\usepackage[bookmarksnumbered,pdfstartview=FitH,hypertexnames=false]{hyperref}
 
 % Configure hyperref for better URL breaking
 \hypersetup{
@@ -46,7 +51,7 @@
 
 % Watermark for draft version
 \usepackage{draftwatermark}
-\SetWatermarkText{DRAFT VERSION 0.1.49}
+\SetWatermarkText{DRAFT VERSION 0.1.55}
 \SetWatermarkScale{2.0}
 \SetWatermarkColor[gray]{0.85}
 

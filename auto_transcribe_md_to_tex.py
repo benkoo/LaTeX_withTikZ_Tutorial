@@ -14,6 +14,10 @@ def section_title_to_filename(title):
     title = re.sub(r"_+", "_", title).strip('_')
     return f"{title}.tex"
 
+# Fix section numbering like '2.0.1' -> '2.1'
+def fix_section_numbering(text):
+    return re.sub(r'(\d+)\.0\.(\d+)', r'\1.\2', text)
+
 # Markdown to LaTeX conversion (basic)
 def process_inline_code(code_text):
     """Process inline code text to properly handle LaTeX special characters"""
@@ -191,8 +195,8 @@ def md_to_latex(md):
             # Order matters! Process deeper header levels first (###) before shallower ones (#)
             # Also strip section numbering
             seg = re.sub(r'^\s*#{3,}\s+(.+)$', 
-                      lambda m: '\\subsubsection{' + strip_section_numbering(m.group(1)) + '}', 
-                      seg, flags=re.MULTILINE)  # ### or more
+                      lambda m: '\\paragraph{' + strip_section_numbering(m.group(1)) + '}', 
+                      seg, flags=re.MULTILINE)  # ### or more (now paragraph with no numbering)
             seg = re.sub(r'^\s*#{2}\s+(.+)$', 
                       lambda m: '\\subsection{' + strip_section_numbering(m.group(1)) + '}', 
                       seg, flags=re.MULTILINE)  # ##

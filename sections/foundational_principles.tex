@@ -1,5 +1,5 @@
 The GASing method is built upon several coherent principles designed to simplify arithmetic into a minimal set of understandable and computationally efficient operations. These principles collectively support the goal of grounding all arithmetic in addition, thereby clarifying resource consumption and enhancing the interpretability of reasoning processes.
-\subsubsection{The Digit-Wise Processing Paradigm}
+\paragraph{The Digit-Wise Processing Paradigm}
 
 At its core, GASing employs a digit-wise processing approach that, instead of merely breaking numbers into fixed constituent digits, flexibly defines the boundaries of arithmetic operations by utilizing the topological properties of Carry and Borrow propagations between adjacent numerical segments (or 'digits'). The granularity of these segments can be dynamically determined to optimize arithmetic calculation efficiency, particularly leveraging the observation that operations become highly efficient when all unique combinations of numerical values within these segments can be assessed \emph{a priori}. This refined digit-wise paradigm is fundamental to minimizing the complexity of the operational vocabulary. Instead of treating numbers as holistic entities requiring a potentially tedious array of complex operations, GASing focuses on manipulating these individual segments using a very limited set of rules, primarily those governing the foundational principles of addition applied at the segment level. This approach aligns with both human cognitive abilities and computational architecture:
 
@@ -7,7 +7,7 @@ At its core, GASing employs a digit-wise processing approach that, instead of me
 - \textbf{Computational Architecture}: This segment-wise processing, where segments can be optimized for computational efficiency (e.g., to fit register sizes or leverage pre-computed lookup tables for segment-level operations), maps effectively to modern processor capabilities. Reducing operations to their simplest form at the segment level (e.g., segment addition and inter-segment carry/borrow) allows for granular understanding, control of computational resources, and potential for optimized hardware implementations.
 
 This fine-grained processing is key to building complex operations from the simplest possible base, ensuring that the entire system remains transparent and its resource demands predictable.
-\subsubsection{Modular Operation Design: A Minimal Vocabulary Anchored in Addition}
+\paragraph{Modular Operation Design: A Minimal Vocabulary Anchored in Addition}
 
 GASing builds all arithmetic operations as modular extensions of one another, with \textbf{addition, applied at the level of flexibly defined numerical segments, serving as the single, foundational operator}. This hierarchical construction, leveraging the segment-wise processing described earlier, is central to achieving a minimal operational vocabulary and directly impacts the assessment of resource consumption:
 
@@ -17,7 +17,7 @@ GASing builds all arithmetic operations as modular extensions of one another, wi
 4.  \textbf{Division} is approached through repeated segment-wise subtraction (which, as noted, is itself addition-based) with optimizations that can leverage pattern recognition across segments. Its complexity and resource use are, therefore, also traceable back to the fundamental segment-wise addition operations.
 
 This modularity, centered on segment-wise addition, creates a coherent and parsimonious framework. Mastery of segment-wise addition directly facilitates the understanding and implementation of all other operations. More importantly, it means that the entire arithmetic system can be analyzed, and its resource consumption (both cognitive and computational) can be estimated based on the number and type of segment-wise addition-equivalent steps involved. This contrasts sharply with systems where each operator might be a black box with unique, opaque resource demands, and it aligns with the goal of transparently assessing computational effort by reducing all operations to a common, addition-based denominator at a flexible granularity.
-\subsubsection{Lookup Tables and Pattern Recognition: Optimizing the Core Operator}
+\paragraph{Lookup Tables and Pattern Recognition: Optimizing the Core Operator}
 
 Central to the GASing method is the use of precomputed lookup tables for basic operations, \textbf{particularly for single-digit addition and its immediate consequences (like carry generation)}. These tables are not an expansion of the operational vocabulary but rather an optimization strategy for the core addition operator:
 

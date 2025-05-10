@@ -1,4 +1,4 @@
-\subsubsection{Addition Algorithm}
+\paragraph{Addition Algorithm}
 
 The GASing addition algorithm processes numbers from left to right (most significant digit to least significant), a departure from the traditional right-to-left approach. This design choice is deliberate and offers several advantages rooted in computational efficiency and cognitive alignment, particularly when considering the broader goals of the GASing framework to minimize operational vocabulary and optimize resource consumption.
 
@@ -49,7 +49,7 @@ This left-to-right, n-ary adaptable processing allows for:
 -   \textbf{Early Termination for Approximations:} Useful in iterative reasoning processes or when full precision is not immediately required.
 
 By structuring the addition algorithm this way, GASing aims to provide a foundational arithmetic layer that is not only efficient in isolation but also highly compatible with modern AI architectures that rely on learned dictionaries and feature-based representations, such as Sparse Autoencoders.
-\subsubsection{Multiplication Algorithm}
+\paragraph{Multiplication Algorithm}
 
 The GASing multiplication algorithm fundamentally extends the principles of the GASing addition operator, reframing multiplication as a systematic process of repeated, structured addition. It conceptualizes the multiplication of two numbers as the summation of partial products arranged in a grid-like structure. This approach not only maintains the core philosophy of minimizing operational vocabulary by grounding operations in addition but also enhances clarity and traceability.
 
@@ -126,10 +126,10 @@ The grid-based approach, when viewed as a structured application of the GASing a
 -   \textbf{Identification of Patterns}: The structured grid can reveal patterns in partial products, which can be leveraged for optimization, especially when combined with n-ary segment processing and lookup tables for segment products.
 
 By treating multiplication as an extension of addition via a grid, GASing maintains its commitment to a minimal operational vocabulary and enhances the interpretability of more complex arithmetic by tracing it back to foundational additive steps.
-\subsubsection{Subtraction and Division: Extending Addition Further}
+\paragraph{Subtraction and Division: Extending Addition Further}
 
 Consistent with GASing's core tenet of a minimal operational vocabulary, both subtraction and division are conceptualized and implemented as extensions of the foundational GASing addition algorithm.
-\subsubsection{Subtraction as Complemented Addition}
+\paragraph{Subtraction as Complemented Addition}
 
 Subtraction in GASing is performed by adding the complement of the subtrahend. For a given base (e.g., decimal or binary), the n's complement (e.g., ten's complement or two's complement) of the subtrahend is calculated and then added to the minuend using the \texttt{$GASing\_{Addition}$} algorithm. This reframes subtraction entirely as an additive process, reinforcing the minimal operator set.
 
@@ -186,7 +186,7 @@ def GASing_Subtraction(a, b, base=10):
 \emph{Helpers \texttt{$pad\_with\_{zeros}$} and \texttt{$GASing\_{Addition}$} are assumed to be defined elsewhere and base-aware.}
 
 ---
-\subsubsection{Division as Repeated Subtraction (Repeated Complemented Addition)}
+\paragraph{Division as Repeated Subtraction (Repeated Complemented Addition)}
 
 Division, in its most fundamental GASing form, is conceptualized as repeated subtraction. Given that subtraction itself is an additive operation (using complements), division becomes a higher-order construct built upon layers of addition.
 
