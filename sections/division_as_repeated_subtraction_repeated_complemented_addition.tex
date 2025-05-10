@@ -1,0 +1,49 @@
+Division, in its most fundamental GASing form, is conceptualized as repeated subtraction. Given that subtraction itself is an additive operation (using complements), division becomes a higher-order construct built upon layers of addition.
+\begin{itemize}
+\item \textbf{Process:} To compute `a / b`, GASing repeatedly subtracts `b` (the divisor) from `a` (the dividend) using the `GASing_Subtraction` method. The number of successful subtractions before `a` becomes less than `b` (or zero) constitutes the quotient. The final value of `a` after these subtractions is the remainder.
+\item \textbf{Optimization:} While simple repeated subtraction can be inefficient, GASing allows for optimizations. These can include subtracting multiples of `b` (e.g., `10\textit{b`, `100}b`), similar to long division, or leveraging pattern recognition to estimate parts of the quotient more quickly. However, even these optimized steps are ultimately resolved through sequences of the core `GASing_Subtraction` (and therefore `GASing_Addition`) operations.
+
+\end{itemize}
+\begin{verbatim}
+def GASing_Division(dividend, divisor, base=10):
+\begin{verbatim}
+"""
+Perform division using repeated GASing_Subtraction.
+dividend, divisor: Strings representing non-negative integers.
+base: Integer base for the operation (default: 10).
+Returns (quotient: str, remainder: str)
+"""
+if divisor == pad_with_zeros("0", len(divisor)):
+return "Error: Division by zero"
+quotient = "0"
+current_dividend = dividend
+one = pad_with_zeros("1", len(quotient))
+\end{verbatim}
+
+\begin{verbatim}
+\section{Comparison helper assumed: is_greater_or_equal(num1, num2)}
+while is_greater_or_equal(current_dividend, divisor):
+subtraction_result, is_neg = GASing_Subtraction(current_dividend, divisor, base)
+if is_neg:
+break
+current_dividend = subtraction_result
+quotient = GASing_Addition(quotient, one)
+\section{Adjust padding for growing quotient}
+if len(quotient) > len(one):
+one = pad_with_zeros("1", len(quotient))
+elif len(one) > len(quotient):
+quotient = pad_with_zeros(quotient, len(one))
+\end{verbatim}
+
+\begin{verbatim}
+remainder = current_dividend
+return quotient, remainder
+\end{verbatim}
+
+\end{verbatim}
+
+\textit{Helpers `pad_with_zeros`, `GASing_Addition`, and `is_greater_or_equal` are assumed to be defined and base-aware.}
+
+---
+
+By defining subtraction and division in terms of addition, GASing ensures that the entire arithmetic framework remains anchored to a single, fundamental operation. This not only simplifies the conceptual model but also provides a consistent basis for analyzing computational resource consumption, as all operations can be broken down into equivalent additive steps.

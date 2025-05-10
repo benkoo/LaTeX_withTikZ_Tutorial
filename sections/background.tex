@@ -1,44 +1,33 @@
-\sectionheader{Background and Related Work}
-\label{sec:background}
+\section{Foundational Principles}\label{sec:background}
 
-\subsection{Petri Net Fundamentals}
+\subsection{The Digit-Wise Processing Paradigm}
 
-Formally, a Petri Net is a tuple $(P, T, F, M_0)$ where:
-\begin{itemize}
-    \item $P$ is a finite set of places
-    \item $T$ is a finite set of transitions
-    \item $F \subseteq (P \times T) \cup (T \times P)$ is a set of arcs
-    \item $M_0: P \rightarrow \mathbb{N}$ is the initial marking
-\end{itemize}
-
-The dynamics of Petri Nets are governed by the firing of transitions. A transition $t$ is enabled if each input place $p$ has at least as many tokens as the weight of the arc from $p$ to $t$. When a transition fires, it consumes tokens from its input places and produces tokens in its output places according to the weights of the corresponding arcs.
-
-\subsection{Types of Petri Nets}
-
-Several extensions to the basic Petri Net model have been proposed to enhance its modeling power:
+At its core, GASing employs a digit-wise processing approach that breaks numbers into their constituent digits and processes them systematically. This approach aligns with both human cognitive abilities and computational architecture:
 
 \begin{itemize}
-    \item \textbf{Colored Petri Nets} \cite{jensen1987coloured}: Extend the basic model by allowing tokens to have data values (colors).
-    \item \textbf{Timed Petri Nets}: Incorporate time into the model, allowing for the analysis of temporal properties.
-    \item \textbf{Stochastic Petri Nets}: Introduce probabilistic elements to model random behavior.
-    \item \textbf{Hierarchical Petri Nets}: Allow for the decomposition of complex models into simpler submodels.
+    \item \textbf{Human Cognition}: Processing single-digit operations recruits well-established neural pathways and memory systems \cite{dehaene2011}.
+    \item \textbf{Computational Architecture}: Digit-wise processing maps naturally to register-based operations in modern processors.
 \end{itemize}
 
-\subsection{Applications of Petri Nets}
+\subsection{Modular Operation Design}
 
-Petri Nets have been applied to various domains, including:
+GASing builds arithmetic operations as modular extensions of one another:
+
+\begin{enumerate}
+    \item \textbf{Addition} serves as the foundational operation
+    \item \textbf{Multiplication} is constructed as specialized, repeated addition
+    \item \textbf{Subtraction} is implemented as addition with complementary digits
+    \item \textbf{Division} is approached through repeated subtraction with optimization
+\end{enumerate}
+
+This modularity creates a coherent framework where mastery of one operation directly facilitates understanding of others.
+
+\subsection{Lookup Tables and Pattern Recognition}
+
+Central to the GASing method is the use of precomputed lookup tables for basic operations, particularly in addition. These tables:
 
 \begin{itemize}
-    \item \textbf{Workflow Management} \cite{van2000workflow}: Modeling and analyzing business processes.
-    \item \textbf{Manufacturing Systems}: Modeling production lines and resource allocation.
-    \item \textbf{Communication Protocols}: Analyzing the behavior of network protocols.
-    \item \textbf{Software Design}: Modeling concurrent and distributed software systems.
+    \item Reduce cognitive load by eliminating the need for real-time calculation of base operations
+    \item Enable pattern recognition across multiple calculations
+    \item Function similarly to CPU cache mechanisms in computing systems
 \end{itemize}
-
-\subsection{Related Work}
-
-Petri Nets have been extended in various ways to model complex systems, but their integration with tensor algebra is relatively unexplored. Tensors provide a natural language for encoding multidimensional relationships and parallel computations, making them ideal for representing the state and evolution of Petri Nets with topological structure.
-
-David Spivak’s work on polynomial functors provides a categorical framework for modeling data types and processes as compositional, tree-like structures. This perspective aligns naturally with Petri Nets, where transitions can be seen as functorial operations on collections of tokens, and places as objects in a category.
-
-Digit-wise arithmetic is a canonical example of a computation that is both highly structured and parallelizable. Neural-symbolic systems have struggled to capture such computations in a transparent and generalizable way. By modeling digit-wise arithmetic as a tensorized Petri Net, we can make explicit the flow of information and the compositional structure of the computation.

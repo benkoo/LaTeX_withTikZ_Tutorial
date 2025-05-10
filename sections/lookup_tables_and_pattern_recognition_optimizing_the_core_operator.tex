@@ -1,0 +1,8 @@
+Central to the GASing method is the use of precomputed lookup tables for basic operations, \textbf{particularly for single-digit addition and its immediate consequences (like carry generation)}. These tables are not an expansion of the operational vocabulary but rather an optimization strategy for the core addition operator:
+\begin{itemize}
+\item \textbf{Reduce Cognitive and Computational Load}: By pre-calculating and storing the results of all possible single-digit additions (e.g., 0+0 through 9+9), the need for real-time calculation of these base operations is eliminated. This directly speeds up the execution of the foundational operator.
+\item \textbf{Enable Pattern Recognition}: Consistent use of lookup tables for the core additive step allows for the easier identification of recurring patterns across multiple calculations. This can lead to higher-level optimizations and a better understanding of the computational structure of a problem, all while still operating within an addition-centric framework.
+\item \textbf{Analogous to Caching}: These tables function similarly to CPU cache mechanisms or memoization in computing systems, storing frequently accessed results to avoid redundant computation. This makes the core addition process highly efficient.
+
+\end{itemize}
+By optimizing the execution of the single core operator (addition) through lookup tables, GASing ensures that the minimal vocabulary does not come at the cost of prohibitive inefficiency for elementary steps. This focus on optimizing the fundamental building block is crucial for the scalability and practicality of the approach, ensuring that even complex reasoning built from these simple steps remains manageable in terms of resource consumption.

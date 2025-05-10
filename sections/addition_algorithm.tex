@@ -1,0 +1,67 @@
+The GASing addition algorithm processes numbers from left to right (most significant digit to least significant), a departure from the traditional right-to-left approach. This design choice is deliberate and offers several advantages rooted in computational efficiency and cognitive alignment, particularly when considering the broader goals of the GASing framework to minimize operational vocabulary and optimize resource consumption.
+
+A key principle underpinning this algorithm is its explicit leverage of \textbf{n-ary arithmetic}. The algorithm is designed to be agnostic to the base of the numerical segments being processed. Whether the system operates in binary, tertiary, decimal, hexadecimal, or any other base (n-ary), the core logic of left-to-right processing with carry propagation remains consistent. This flexibility allows the system to adapt the granularity of its operations (i.e., the 'digit' size or segment length) to best fit resource consumption optimization schemes. For instance, the segment size can be chosen to align with the cache line size of a processor or the optimal block size for memory access, thereby minimizing latency and maximizing throughput for pre-calculated and stored intermediate results.
+
+This adaptability is crucial for applying GASing principles to complex reasoning activities, potentially even those embedded within advanced AI architectures like the \textbf{Sparse Autoencoders (SAEs)} described in the <mcfile name="ScalingMonoSemanticity.md" path="/Users/bkoo/Documents/Development/AIProjects/GASing_PKM/docs/references/ScalingMonoSemanticity.md"></mcfile> paper. SAEs aim to decompose complex model activations into a sparse set of interpretable, monosemantic features. In essence, an SAE learns a large dictionary of these features, where only a small subset is active for any given input. This learned dictionary of features in an SAE can be seen as analogous to a highly optimized, distributed lookup table within the GASing framework. 
+
+The GASing addition algorithm, by being designed for flexible n-ary arithmetic and optimized segment processing, aligns well with such architectures. If the 'features' learned by an SAE can be mapped to or interact with the numerical segments processed by GASing, then the pre-calculated operations and lookup tables inherent in GASing could significantly enhance the efficiency and interpretability of these SAEs. The left-to-right processing allows for incremental computation and potential early termination if an approximate result suffices, which can be beneficial in resource-constrained environments or when dealing with the vast feature spaces of SAEs. Furthermore, by designing arithmetic operations that can be efficiently cached and retrieved, GASing can support the rapid activation and combination of these 'semantic features' in an SAE, effectively making the SAE a powerful, dynamic dictionary that GASing can interact with for reasoning tasks.
+
+The pseudo-code remains as a fundamental illustration:
+
+\begin{verbatim}
+function GASing_Addition(a, b):
+\begin{verbatim}
+result = ""
+carry = 0
+\end{verbatim}
+    
+\begin{verbatim}
+\section{Pad the shorter number with leading zeros}
+a = pad_with_zeros(a, len(b))
+b = pad_with_zeros(b, len(a))
+\end{verbatim}
+    
+\begin{verbatim}
+\section{Process from left to right}
+for i in range(0, len(a)):
+\section{Add digits and carry}
+digit_sum = int(a[i]) + int(b[i]) + carry
+\end{verbatim}
+        
+\begin{verbatim}
+\section{Determine new digit and carry}
+if digit_sum > 9:
+carry = 1
+digit = digit_sum - 10
+else:
+carry = 0
+digit = digit_sum
+\end{verbatim}
+            
+\begin{verbatim}
+result += str(digit)
+\end{verbatim}
+    
+\begin{verbatim}
+\section{Add final carry if necessary}
+if carry > 0:
+result += str(carry)
+\end{verbatim}
+        
+\begin{verbatim}
+return result
+\end{verbatim}
+
+\end{verbatim}
+
+This left-to-right, n-ary adaptable processing allows for:
+\begin{itemize}
+\item \textbf{Flexible Resource Optimization:} Tailoring segment size (n-ary base) to hardware (cache, memory) or task demands.
+\item \textbf{Alignment with Human Cognition:} Processing information sequentially, similar to reading.
+\item \textbf{Potential for Parallelization:} Independent processing of segments once carries are managed.
+\item \textbf{Integration with Learned Representations:} Provides a computational backend for systems like SAEs, where pre-calculated arithmetic on features (analogous to dictionary lookups) can speed up reasoning.
+\item \textbf{Early Termination for Approximations:} Useful in iterative reasoning processes or when full precision is not immediately required.
+
+\end{itemize}
+By structuring the addition algorithm this way, GASing aims to provide a foundational arithmetic layer that is not only efficient in isolation but also highly compatible with modern AI architectures that rely on learned dictionaries and feature-based representations, such as Sparse Autoencoders.
+% Content will be added here

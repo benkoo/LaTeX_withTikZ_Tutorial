@@ -1,0 +1,8 @@
+GASing's systematic approach to arithmetic offers attention-like properties when processing multi-digit numbers:
+\begin{itemize}
+\item \textbf{Direct Digit Access}: Similar to how self-attention allows any position in a sequence to directly interact with any other position (O(1) path length), GASing's digit-wise processing enables direct access to any digit regardless of its position. This is especially powerful for operations that benefit from examining digits in specific positions.
+\item \textbf{Rule-Based Position Attention}: The systematic rule-based approach creates a form of "positional attention" where computational patterns are determined by digit positions and their relationships, much like how positional encodings in Transformers help the model understand sequence order.
+\item \textbf{Reduced Branch Mispredictions}: Like the deterministic attention mechanism in Transformers that avoids recurrent branching, GASing's predictable operation sequences reduce branch mispredictions in processor pipelines. This is particularly valuable in cases where traditional algorithms would have data-dependent branches.
+
+\end{itemize}
+% Content will be added here

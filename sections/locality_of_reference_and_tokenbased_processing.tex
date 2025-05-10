@@ -1,0 +1,8 @@
+GASing's digit-wise processing conceptualizes numbers as sequences of tokens, similar to how Transformers process words or subwords. Just as the Transformer treats each token in a sentence as a discrete unit to be processed in parallel, GASing treats each digit as a computational token that can be addressed independently:
+\begin{itemize}
+\item \textbf{Tokenized Numerical Representation}: By treating a number as a sequence of digits, GASing effectively "tokenizes" numerical data. This mirrors how Transformers tokenize language, allowing arithmetic operations to be reframed as operations on token sequences rather than atomic values.
+\item \textbf{Cache-Friendly Operations}: The lookup-table approach enables high cache locality by organizing digit-wise operations into predictable memory access patterns. Similar to how Transformer's attention mechanism pre-computes key-value pairs, GASing pre-computes digit-wise results, reducing memory latency and improving throughput.
+\item \textbf{Compression at Representational Level}: This digit-wise representation provides a fundamental form of information compression. By recognizing patterns at the digit level (e.g., repeated digits, special sequences), GASing can compress computational workloads similar to how attention mechanisms compress sequence information through weighted summation.
+
+\end{itemize}
+% Content will be added here

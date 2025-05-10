@@ -1,31 +1,84 @@
-\sectionheader{Methodology}
-\label{sec:methodology}
+\section{GASing Implementation and Algorithms}\label{sec:methodology}
 
-\subsection{Tensorized Petri Nets via Polynomial Functors}
+\subsection{Addition Algorithm}
 
-\subsubsection{Tensor Representation of Petri Nets}
+The GASing addition algorithm processes numbers from left to right (most significant digit to least significant), contrary to the traditional right-to-left approach. This presents several advantages:
 
+\begin{lstlisting}[language=Python, caption=GASing Addition Algorithm]
+function GASing_Addition(a, b):
+    result = ""
+    carry = 0
+    
+    # Pad the shorter number with leading zeros
+    a = pad_with_zeros(a, len(b))
+    b = pad_with_zeros(b, len(a))
+    
+    # Process from left to right
+    for i in range(0, len(a)):
+        # Add digits and carry
+        digit_sum = int(a[i]) + int(b[i]) + carry
+        
+        # Determine new digit and carry
+        if digit_sum > 9:
+            carry = 1
+            digit = digit_sum - 10
+        else:
+            carry = 0
+            digit = digit_sum
+            
+        result += str(digit)
+    
+    # Add final carry if necessary
+    if carry > 0:
+        result += str(carry)
+        
+    return result
+\end{lstlisting}
+
+The left-to-right processing allows for:
 \begin{itemize}
-    \item \textbf{Places as Tensor Indices:} Each place in a Petri Net corresponds to an index in a tensor, representing a position (e.g., a digit in a number, or a cell in a grid).
-    \item \textbf{Tokens as Tensor Entries:} The state of the net is encoded as a tensor, with entries indicating the presence or value of tokens at each place.
-    \item \textbf{Transitions as Tensor Operations:} Transitions correspond to multilinear maps or contractions, updating the tensor state according to the net’s rules.
+    \item Earlier termination for approximate calculations
+    \item Alignment with human reading order
+    \item Potential parallelization in computational contexts
 \end{itemize}
 
-\subsubsection{Polynomial Functors for Compositionality}
+\subsection{Multiplication Algorithm}
 
+GASing multiplication extends the addition algorithm through a structured grid approach:
+
+\begin{lstlisting}[language=Python, caption=GASing Multiplication Algorithm]
+function GASing_Multiplication(a, b):
+    # Initialize result grid
+    rows = len(b)
+    cols = len(a)
+    grid = initialize_grid(rows, cols)
+    
+    # Fill multiplication grid
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = int(b[i]) * int(a[j])
+    
+    # Apply carry propagation using pattern recognition
+    apply_carries(grid)
+    
+    # Convert grid to result
+    result = grid_to_result(grid)
+    
+    return result
+\end{lstlisting}
+
+The grid-based approach facilitates:
 \begin{itemize}
-    \item \textbf{Elements as Operators and Operands:} Inspired by polynomial functors, each element (place or transition) can act as both an operand (receiving tokens) and an operator (transforming tokens).
-    \item \textbf{Functorial Structure:} The wiring of the Petri Net encodes a functorial mapping from input tensors (operands) to output tensors (results), supporting modular and hierarchical composition.
+    \item Visualization of the multiplication process
+    \item Systematic carry handling
+    \item Identification of patterns in partial products
 \end{itemize}
 
-\subsubsection{Example: Digit-wise Arithmetic}
+\subsection{Subtraction and Division}
 
-\begin{itemize}
-    \item \textbf{Digit Positions as Places:} Each digit position in a number is a place in the Petri Net.
-    \item \textbf{Carry and Sum as Transitions:} Transitions implement digit-wise addition, carry propagation, and modular reduction, all as tensor operations.
-    \item \textbf{Topological Relationships:} The tensor structure captures the adjacency of digits and the flow of carries, enabling parallel and interpretable computation.
-\end{itemize}
+Subtraction in GASing employs the complement method, where negative results at any position trigger borrowing operations in a systematic way. Division extends subtraction through iterative processes with optimization for common patterns.
 
+<<<<<<< HEAD
 \subsection{Problem Definition}
 
 [Define the specific problem you are addressing with your Petri Net model]
@@ -95,13 +148,36 @@ To illustrate common concurrency problems that can be modeled with Petri Nets, w
 \subsection{Model Analysis}
 
 To analyze the properties of our Petri Net model, we examine:
+=======
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % Addition operation diagram showing digit-wise processing
+        \node[operation, minimum width=4cm] (addition) at (0,0) {GASing Addition};
+        \node[operation] (subtraction) at (-2.5,-2) {GASing Subtraction};
+        \node[operation] (multiplication) at (2.5,-2) {GASing Multiplication};
+        \node[operation, minimum width=4cm] (division) at (0,-4) {GASing Division};
+        
+        % Connections
+        \draw[->, thick] (addition) -- (subtraction);
+        \draw[->, thick] (addition) -- (multiplication);
+        \draw[->, thick] (subtraction) -- (division);
+        \draw[->, thick] (multiplication) -- (division);
+    \end{tikzpicture}
+    \caption{Hierarchical relationship between GASing arithmetic operations}
+    \label{fig:gasing_operations}
+\end{figure}
+
+Our implementation architecture includes variants in multiple programming languages to facilitate performance comparisons:
+>>>>>>> 81a8f8d (Added the argument for resource sensitive interpretability)
 
 \begin{itemize}
-    \item \textbf{Reachability}: Determining whether a specific marking can be reached from the initial marking.
-    \item \textbf{Boundedness}: Ensuring that the number of tokens in each place does not exceed a finite bound.
-    \item \textbf{Liveness}: Verifying that the model is free from deadlocks.
-    \item \textbf{Fairness}: Ensuring that all enabled transitions eventually fire.
+    \item Pure Python implementations (gasing\_simulasi, penjumlahan\_tradisional)
+    \item Optimized C bindings (gasing\_add\_c, gasing\_add\_c\_optimized)
+    \item Rust implementations (gasing\_add\_rust, gasing\_add\_rust\_optimized)
+    \item Pattern-specific optimizations for common number patterns
 \end{itemize}
+<<<<<<< HEAD
 
 \subsection{Wiring Diagram Representation}
 
@@ -117,3 +193,5 @@ Figure \ref{fig:clock_with_display} presents a wiring diagram in the style of Da
 \subsection{Implementation}
 
 [Describe the tools or methods used to implement and analyze your Petri Net model]
+=======
+>>>>>>> 81a8f8d (Added the argument for resource sensitive interpretability)

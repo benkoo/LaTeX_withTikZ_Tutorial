@@ -4,48 +4,137 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{petri,positioning}
-\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{petri,positioning,arrows,automata,decorations.pathreplacing,shapes}
+\usepackage{inputenc}
+
+% Improved URL and bibliography handling
+\usepackage[hyphens]{url}  % Allow URLs to break at hyphens
+\usepackage{hyperref}     % Must come after url package
+
+% Configure hyperref for better URL breaking
+\hypersetup{
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+\usepackage{listings}
+
+% Custom code listing style for smaller font and line breaks
+\lstdefinestyle{gasingcode}{
+  breaklines=true,
+  basicstyle=\footnotesize\ttfamily,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  xleftmargin=1.5em,
+  xrightmargin=0.5em,
+  aboveskip=0.5em,
+  belowskip=0.5em
+}
+
+% Set default style for all listings
+\lstset{style=gasingcode}
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{enumitem}
 
-% Load custom style file
-\usepackage{styles/custom}
+% Watermark for draft version
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT VERSION 0.1.49}
+\SetWatermarkScale{2.0}
+\SetWatermarkColor[gray]{0.85}
+
+% Define our own styles for diagrams
+\tikzset{
+    operation/.style={
+        rectangle,
+        draw=black,
+        thick,
+        fill=blue!10,
+        minimum height=1cm,
+        minimum width=2.5cm,
+        text centered
+    }
+}
 
 % Load Spivak/Fong TikZ wiring diagram macros
 \input{figures/spivak_fong_wd_macros.tex}
 
 \begin{document}
 
-\title{Analysis of [Your Topic] Using Petri Net Models}
-\author{
-  John Doe\textsuperscript{1} \and Jane Doe\textsuperscript{2} \\
-  \small\textsuperscript{1}University of Example \\
-  \small\textsuperscript{2}Institute of Sample
-}
-\date{\today}
+\title{The GASing Arithmetic System: Pattern-Aware, Addition-Based Computation for Next-Generation AI}
 
-\input{.author_info.tex}
+\input{author_info.tex}
 
 \maketitle
 
-\begin{abstract}
-This paper presents an analysis of [specific topic] using Petri Net models. We demonstrate how Petri Nets can be effectively used to model and analyze [specific systems or processes]. Our approach combines theoretical foundations with practical applications, providing insights into [specific findings]. The results show that [brief summary of key results], which has implications for [specific field or application area].
+% Enable page numbering
+\pagestyle{plain}
+\pagenumbering{arabic}
 
-\textbf{Keywords:} Petri Nets, TikZ, formal modeling, concurrent systems, [other keywords]
-\end{abstract}
+% GASing Arithmetic: Enhanced Section Structure
+\section*{Abstract}
+\input{sections/abstract}
 
-% Include sections
+\section{Introduction}
 \input{sections/introduction}
-\input{sections/background}
-\input{sections/methodology}
-\input{sections/results}
-\input{sections/discussion}
+
+\section{Foundational Principles}
+\input{sections/foundational_principles}
+
+\section{GASing Implementation and Algorithms}
+\input{sections/gasing_implementation_and_algorithms}
+
+\section{Performance Benchmarking}
+\input{sections/performance_benchmarking}
+
+\section{Computational Advantages}
+\input{sections/computational_advantages}
+
+\section{Pedagogical Applications}
+\input{sections/pedagogical_applications}
+
+\section{Future Directions and Discussion}
+\input{sections/future_directions_and_discussion}
+
+\section{Conclusion}
 \input{sections/conclusion}
 
-// Bibliography
-\bibliographystyle{plain}
+% Appendix section
+\appendix
+\input{sections/appendix}
+
+
+% Old section inclusions are commented out for reference
+% \input{sections/background}
+% \input{sections/methodology}
+% \input{sections/results}
+% \input{sections/discussion}
+
+% Bibliography
+\nocite{*}
+
+% Custom bibliography formatting for better wrapping of long references
+\makeatletter
+\def\url@leostyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+
+% Adjust the maximum width for URLs in bibliography
+\Urlmuskip=0mu plus 3mu
+
+% Add more flexibility to where LaTeX can break lines in bibliography
+\sloppy
+\emergencystretch=2em
+
+% Use IEEEtran style with our custom settings
+\bibliographystyle{IEEEtran}
 \bibliography{bibliography}
 
 \end{document}

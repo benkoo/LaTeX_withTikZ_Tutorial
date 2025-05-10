@@ -1,0 +1,8 @@
+The digit-wise nature of GASing creates natural parallelization opportunities that mirror the Transformer's parallel processing capabilities:
+\begin{itemize}
+\item \textbf{Position-wise Processing}: Just as the Transformer applies the same feed-forward network to each position independently, GASing applies identical digit-wise operations across positions. This enables SIMD (Single Instruction, Multiple Data) optimization at the hardware level.
+\item \textbf{Granular Task Distribution}: GASing naturally decomposes arithmetic into smaller, independent sub-tasks that can be distributed across processing units, similar to how Transformer's multi-head attention parallelizes attention computations across multiple representation subspaces.
+\item \textbf{Constant Path Length Operations}: Like the Transformer's attention mechanism that maintains a constant computational path length regardless of sequence length, GASing's pattern-based approach provides constant-time operations for certain patterns regardless of digit count.
+
+\end{itemize}
+% Content will be added here

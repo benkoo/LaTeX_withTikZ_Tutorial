@@ -1,0 +1,168 @@
+% Appendix
+% This appendix contains supplementary material, proofs, extended algorithms, and additional data relevant to the GASing Arithmetic System.
+
+\section{Appendix I: GASing Addition Algorithm}
+\label{appendix:addition}
+\begin{lstlisting}[language=Python,caption={GASing Addition Algorithm}]
+function GASing_Addition(a, b):
+    result = ""
+    carry = 0
+    
+    # Pad the shorter number with leading zeros
+    a = pad_with_zeros(a, len(b))
+    b = pad_with_zeros(b, len(a))
+    
+    # Process from left to right
+    for i in range(0, len(a)):
+        # Add digits and carry
+        digit_sum = int(a[i]) + int(b[i]) + carry
+        
+        # Determine new digit and carry
+        if digit_sum > 9:
+            carry = 1
+            digit = digit_sum - 10
+        else:
+            carry = 0
+            digit = digit_sum
+        
+        result += str(digit)
+    
+    # Add final carry if necessary
+    if carry > 0:
+        result += str(carry)
+        
+    return result
+\end{lstlisting}
+
+\section{Appendix II: GASing Multiplication Algorithm}
+\label{appendix:multiplication}
+\begin{lstlisting}[language=Python,caption={GASing Multiplication Algorithm (Conceptual)}]
+function GASing_Multiplication(a, b):
+    # Initialize a grid to store partial products (results of single-digit multiplications)
+    # The dimensions of the grid depend on the number of digits/segments in a and b.
+    # For example, if a has M segments and b has N segments, grid is N x M.
+        
+    grid = initialize_partial_product_grid(a, b) # Each grid[i][j] = segment_b[i] * segment_a[j]
+        
+    # The core of multiplication is now to sum the values in this grid in a structured way.
+    # This can be visualized as summing diagonals or columns, applying GASing addition.
+    # For simplicity, imagine a function that collects these partial products and sums them
+    # using the previously defined GASing_Addition logic, managing carries appropriately.
+
+    final_product = "0"
+    # Iterate through the grid, treating each row (or shifted row) as a number to be added.
+    # This is a conceptual representation; actual implementation involves careful alignment and summation.
+    for i in range(len(b)):
+        partial_sum_for_row_i = "0"
+        for j in range(len(a)):
+            # Conceptually, each grid[i][j] contributes to a sum that is then added.
+            # A more direct approach involves summing diagonals or columns with carries.
+            # This step is a placeholder for the detailed grid summation logic.
+            # For instance, grid[i][j] is like (digit_b[i] * digit_a[j]) * 10^(position_factor)
+            # These terms are then summed up.
+            pass # Detailed grid summation logic would be here.
+
+    # A more accurate representation of grid summation:
+    # 1. Calculate all single-segment products: product_ij = segment_a[j] * segment_b[i]
+    # 2. Arrange these products in a grid, aligning them according to their place value.
+    # 3. Sum the columns of this grid using GASing_Addition, propagating carries.
+
+    # Example (conceptual): Summing diagonals of the grid of partial products
+    # result = sum_grid_diagonals_with_gasing_addition(grid)
+
+    # Simplified placeholder for the complex summation logic:
+    # Assume 'grid_to_result' performs the systematic addition of partial products
+    # according to GASing principles (left-to-right, carry management).
+    
+    result = perform_structured_addition_on_grid(grid, GASing_Addition_function_pointer)
+
+return result
+\end{lstlisting}
+
+\section{Appendix III: GASing Subtraction and Division Algorithms}
+\label{appendix:subtraction}
+\begin{lstlisting}[language=Python,caption={GASing Subtraction Algorithm}]
+function GASing_Subtraction(a, b, base=10):
+    # Ensure a and b are of the same length for complement calculation
+    # This might involve padding the shorter number or defining a fixed width.
+    # For simplicity, assume a and b are positive integers represented as strings.
+    num_digits = max(len(a), len(b))
+
+    a_padded = pad_with_zeros(a, num_digits)
+    b_padded = pad_with_zeros(b, num_digits)
+
+    # Calculate n's complement of b (e.g., ten's complement for base 10)
+    # This involves (base^num_digits - b_padded)
+    # A common method: ( (base-1)'s_complement of b_padded ) + 1
+    b_complement_n_minus_1 = ""
+    for digit_char in b_padded:
+        b_complement_n_minus_1 += str((base - 1) - int(digit_char))
+
+    # Add 1 to get n's complement (e.g., ten's complement)
+    # This addition itself can use a simplified version of GASing_Addition or direct logic
+    one_str = pad_with_zeros("1", num_digits)
+    b_complement_n = GASing_Addition(b_complement_n_minus_1, one_str) # Assuming base compatibility
+    # Handle potential overflow from complement addition if b_complement_n exceeds num_digits
+    if len(b_complement_n) > num_digits and b_complement_n.startswith('1'): # Check for leading '1' from carry
+        b_complement_n = b_complement_n[1:] # Keep only num_digits
+    else:
+        b_complement_n = pad_with_zeros(b_complement_n, num_digits)
+
+    # Perform a + (n's complement of b)
+    # The GASing_Addition function is used here.
+    sum_with_complement = GASing_Addition(a_padded, b_complement_n) # Ensure base compatibility
+
+    # Interpret the result
+    if len(sum_with_complement) > num_digits and sum_with_complement.startswith('1'): # Overflow carry indicates positive result
+        result = sum_with_complement[1:] # Discard overflow carry
+        is_negative = False
+    else:
+        # No overflow carry indicates negative result or zero
+        # The result is negative, and its magnitude is the n's complement of sum_with_complement
+        # For simplicity, we'll just flag it as negative and take complement again for magnitude
+        # (or handle based on specific complement arithmetic rules)
+        if sum_with_complement == pad_with_zeros("0", num_digits):
+            result = sum_with_complement
+            is_negative = False
+        else:
+            # Recalculate n's complement of sum_with_complement to get magnitude
+            temp_complement_n_minus_1 = ""
+            sum_with_complement_padded = pad_with_zeros(sum_with_complement, num_digits)
+            for digit_char in sum_with_complement_padded:
+                temp_complement_n_minus_1 += str((base - 1) - int(digit_char))
+            result = GASing_Addition(temp_complement_n_minus_1, one_str) # Magnitude
+            if len(result) > num_digits and result.startswith('1'):
+                result = result[1:]
+            else:
+                result = pad_with_zeros(result, num_digits)
+            is_negative = True
+            
+    return result, is_negative
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python,caption={GASing Division Algorithm}]
+function GASing_Division(dividend, divisor, base=10):
+    if divisor == pad_with_zeros("0", len(divisor)):
+        return "Error: Division by zero"
+    quotient = "0"
+    current_dividend = dividend
+    one = pad_with_zeros("1", len(quotient)) # For incrementing quotient
+
+    # Repeatedly subtract divisor from current_dividend
+    # We need a comparison function: is_greater_or_equal(num1, num2)
+    while is_greater_or_equal(current_dividend, divisor):
+        subtraction_result, is_neg = GASing_Subtraction(current_dividend, divisor, base)
+        if is_neg: # Should not happen if is_greater_or_equal is correct
+            break 
+        current_dividend = subtraction_result
+        quotient = GASing_Addition(quotient, one) # Increment quotient
+        # Ensure 'one' is padded correctly if quotient grows
+        if len(quotient) > len(one):
+            one = pad_with_zeros("1", len(quotient))
+        elif len(one) > len(quotient):
+            quotient = pad_with_zeros(quotient, len(one))
+
+    remainder = current_dividend
+    return quotient, remainder
+\end{lstlisting}
+

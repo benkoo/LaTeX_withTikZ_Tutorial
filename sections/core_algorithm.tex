@@ -1,0 +1,21 @@
+\section{Foundational Principles and Core Algorithm}
+
+At its core, GASing employs a digit-wise processing approach, flexibly defining the boundaries of arithmetic operations by utilizing the topological properties of carry and borrow propagations between adjacent numerical segments. The granularity of these segments can be dynamically determined to optimize calculation efficiency, particularly by leveraging the observation that all unique combinations of values within these segments can be assessed \emph{a priori}.
+
+Central to the GASing method is the use of precomputed lookup tables for basic operations, especially single-digit addition and its immediate consequences (like carry generation). These tables are not an expansion of the operational vocabulary but an optimization strategy for the core addition operator:
+\begin{itemize}
+    \item \textbf{Reduce Cognitive and Computational Load}: Pre-calculating all possible single-digit additions (e.g., $0+0$ through $9+9$) eliminates the need for real-time calculation of these base operations, directly speeding up the foundational operator.
+    \item \textbf{Enable Pattern Recognition}: Consistent use of lookup tables for the core additive step allows easier identification of recurring patterns, leading to higher-level optimizations and a deeper understanding of computational structure.
+    \item \textbf{Analogous to Caching}: These tables function similarly to CPU caches or memoization, storing frequently accessed results to avoid redundant computation, thus making the core addition process highly efficient.
+\end{itemize}
+
+\subsection{Addition}
+The GASing addition algorithm operates segment-wise, using explicit carry detection and sum calculation. (Pseudocode and explanation omitted for brevity; see appendix or code repository.)
+
+\subsection{Multiplication}
+GASing multiplication is implemented as repeated addition, optimized by segmenting the process and leveraging pattern recognition for partial products.
+
+\subsection{Subtraction and Division}
+Subtraction is performed by adding the complement of the subtrahend, reframing subtraction as an additive process. Division is conceptualized as repeated subtraction, and thus as repeated complemented addition, with higher-order optimizations possible.
+
+By defining all arithmetic in terms of addition, GASing ensures the arithmetic framework remains anchored to a single, fundamental operation, simplifying analysis and resource management.

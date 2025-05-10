@@ -1,0 +1,69 @@
+Subtraction in GASing is performed by adding the complement of the subtrahend. For a given base (e.g., decimal or binary), the n's complement (e.g., ten's complement or two's complement) of the subtrahend is calculated and then added to the minuend using the `GASing_Addition` algorithm. This reframes subtraction entirely as an additive process, reinforcing the minimal operator set.
+\begin{itemize}
+\item \textbf{N's Complement:} The n's complement of a number `b` with `k` digits in base `n` is `(n^k - b)`. A common way to compute this is by finding the (n-1)'s complement (subtracting each digit from `n-1`) and then adding 1 to the result.
+\item \textbf{Process:} To compute `a - b`, GASing calculates `a + (n's complement of b)`. If an overflow carry occurs from the most significant digit, it is typically discarded (in fixed-width representations), and the remaining result is the positive difference. If no overflow occurs, the result is negative, and its true magnitude is the n's complement of the sum, often flagged appropriately.
+
+\end{itemize}
+\begin{verbatim}
+def GASing_Subtraction(a, b, base=10):
+\begin{verbatim}
+"""
+Perform subtraction using GASing's complemented addition approach.
+a, b: Strings representing non-negative integers.
+base: Integer base for the operation (default: 10).
+Returns (result: str, is_negative: bool)
+"""
+num_digits = max(len(a), len(b))
+a_padded = pad_with_zeros(a, num_digits)
+b_padded = pad_with_zeros(b, num_digits)
+\end{verbatim}
+
+\begin{verbatim}
+\section{(n-1)'s complement}
+b_complement_n_minus_1 = ''.join(str((base - 1) - int(d)) for d in b_padded)
+\section{n's complement: add 1}
+one_str = pad_with_zeros("1", num_digits)
+b_complement_n = GASing_Addition(b_complement_n_minus_1, one_str)
+\end{verbatim}
+
+\begin{verbatim}
+\section{Ensure correct length after addition}
+if len(b_complement_n) > num_digits and b_complement_n.startswith('1'):
+b_complement_n = b_complement_n[1:]
+else:
+b_complement_n = pad_with_zeros(b_complement_n, num_digits)
+\end{verbatim}
+
+\begin{verbatim}
+\section{Add to minuend}
+sum_with_complement = GASing_Addition(a_padded, b_complement_n)
+\end{verbatim}
+
+\begin{verbatim}
+\section{Interpret result}
+if len(sum_with_complement) > num_digits and sum_with_complement.startswith('1'):
+result = sum_with_complement[1:]
+is_negative = False
+else:
+if sum_with_complement == pad_with_zeros("0", num_digits):
+result = sum_with_complement
+is_negative = False
+else:
+\section{Take n's complement for magnitude}
+temp_complement = ''.join(str((base - 1) - int(d)) for d in pad_with_zeros(sum_with_complement, num_digits))
+result = GASing_Addition(temp_complement, one_str)
+if len(result) > num_digits and result.startswith('1'):
+result = result[1:]
+else:
+result = pad_with_zeros(result, num_digits)
+is_negative = True
+return result, is_negative
+\end{verbatim}
+
+\end{verbatim}
+
+\textit{Helpers `pad_with_zeros` and `GASing_Addition` are assumed to be defined elsewhere and base-aware.}
+
+---
+
+##
