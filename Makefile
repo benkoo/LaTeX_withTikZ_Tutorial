@@ -7,8 +7,14 @@ PDF=$(MAIN).pdf
 
 all: $(PDF)
 
+
+ifneq (,$(wildcard .env))
+  include .env
+  export
+endif
+
 # Define the source Markdown file
-MD_SOURCE=../wip/experiments/GASing_Arithemtic.md
+MD_SOURCE=$(MC_SOURCE)
 
 $(PDF): $(TEXSRC) .author_info.tex bibliography.bib
 	@echo "Validating Markdown structure..."
