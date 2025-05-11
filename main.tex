@@ -10,7 +10,6 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{petri,positioning,arrows,automata,decorations.pathreplacing,shapes}
-\usepackage{inputenc}
 
 % Improved URL and bibliography handling
 \usepackage[hyphens]{url}  % Allow URLs to break at hyphens
@@ -51,8 +50,8 @@
 
 % Watermark for draft version
 \usepackage{draftwatermark}
-\SetWatermarkText{DRAFT VERSION 0.1.56}
-\SetWatermarkScale{2.0}
+\SetWatermarkText{DRAFT VERSION 0.1.65}
+\SetWatermarkScale{0.45}
 \SetWatermarkColor[gray]{0.85}
 
 % Define our own styles for diagrams
@@ -71,17 +70,30 @@
 % Load Spivak/Fong TikZ wiring diagram macros
 \input{figures/spivak_fong_wd_macros.tex}
 
+% Load arxiv.sty LAST to override previous settings
+\usepackage{arxiv}
+
 \begin{document}
 
+% Create a one-column title in a two-column document
+\twocolumn[{
+\begin{@twocolumnfalse}
+\centering
+\vspace*{-15pt}
 \title{The GASing Arithmetic System: Pattern-Aware, Addition-Based Computation for Next-Generation AI}
-
+\shorttitle{GASing Arithmetic System}
 \input{author_info.tex}
-
 \maketitle
+\vspace{20pt} % Adjust space after title
+\end{@twocolumnfalse}
+}]
 
 % Enable page numbering
 \pagestyle{plain}
 \pagenumbering{arabic}
+
+% Set column separation for better readability
+\setlength{\columnsep}{0.5in}
 
 % GASing Arithmetic: Enhanced Section Structure
 \section*{Abstract}
@@ -143,4 +155,3 @@
 \bibliography{bibliography}
 
 \end{document}
-\setlength{\columnsep}{0.5in}
