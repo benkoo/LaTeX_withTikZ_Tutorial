@@ -61,9 +61,28 @@
 \usepackage{float}
 \usepackage{enumitem}
 
+% Simple approach for left margin watermark
+\usepackage{rotating}
+\usepackage{eso-pic}
+\usepackage{color}
+
+% Define a simple, reliable left margin watermark
+\AddToShipoutPictureBG{%
+  \AtTextLowerLeft{%
+    \makebox[0pt][r]{%
+      \begin{minipage}[b]{1cm}%
+        \begin{turn}{90}%
+          \textcolor{black!40}{\fontsize{12pt}{14pt}\selectfont\bfseries\strut\quad arXiv:2025.12345v2 [cs.CL] \today\strut}%
+        \end{turn}%
+      \end{minipage}%
+      \hspace{5mm}%
+    }%
+  }%
+}
+
 % Watermark for draft version
 \usepackage{draftwatermark}
-\SetWatermarkText{DRAFT VERSION 0.1.79}
+\SetWatermarkText{DRAFT VERSION 0.1.91}
 \SetWatermarkScale{0}
 \SetWatermarkColor[gray]{0.85}
 
@@ -86,19 +105,40 @@
 % Load arxiv.sty LAST to override previous settings
 \usepackage{arxiv}
 
+% Custom title settings - set format for arXiv style
+\renewcommand{\shorttitle}{GASing Arithmetic}
+\renewcommand{\undertitle}{A Preprint}
+\renewcommand{\headeright}{arXiv:2025.12345v1}
+
+% Use simple header/footer settings
+\pagestyle{fancy}
+\fancyhf{} % Clear all header/footer fields
+\fancyfoot[C]{\thepage} % Page number in center footer
+\fancyhead[C]{\shorttitle} % Short title in center header
+\fancyhead[R]{\headeright} % arXiv ID in right header
+\renewcommand{\headrulewidth}{0.4pt} % Line under the header
+
 \begin{document}
 
-% Create a one-column title in a two-column document
+% Left margin watermark is applied through fancyhdr
+
+% Custom title page with author information
 \twocolumn[{
-\begin{@twocolumnfalse}
-\centering
-\vspace*{-15pt}
-\title{The GASing Arithmetic System: Pattern-Aware, Addition-Based Computation for Next-Generation AI}
-\shorttitle{GASing Arithmetic System}
-\input{author_info.tex}
-\maketitle
-\vspace{20pt} % Adjust space after title
-\end{@twocolumnfalse}
+  \begin{@twocolumnfalse}
+    \vspace*{-10pt}
+    \begin{center}
+      {\LARGE\bfseries Pattern-Aware, Addition-Based Computation for Next-Generation AI}\par
+      \vspace{1.5em}
+      % Display author information directly
+      {\large Yohanes Surya}\par
+      {\small\itshape AI Toba Project, IT Del}\par
+      {\small\itshape Toba, Indonesia}\par
+      {\small\itshape yohanes.surya@del.ac.id}\par
+    \end{center}
+    \vspace{10pt}
+    \hrule
+    \vspace{12pt}
+  \end{@twocolumnfalse}
 }]
 
 % Enable page numbering

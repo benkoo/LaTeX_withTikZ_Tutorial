@@ -1,6 +1,6 @@
 # LaTeX with TikZ Paper Compilation Project
 
-This repository helps you compile and produce academic papers in LaTeX, with a focus on TikZ for high-quality diagrams and illustrations.
+This repository helps you compile and produce academic papers in LaTeX, with a focus on TikZ for high-quality diagrams and illustrations. The project includes robust URL handling and automated build processes for academic writing.
 
 ## Features
 
@@ -9,12 +9,15 @@ This repository helps you compile and produce academic papers in LaTeX, with a f
 - **Automated Build:** `Makefile` automates the compilation process
 - **Markdown Support:** Convert Markdown content to LaTeX
 - **Version Control Friendly:** `.gitignore` excludes build artifacts
+- **Robust URL Handling:** Advanced URL breaking and hyperlink formatting
+- **Version Tracking:** Automated version numbering for drafts
 
 ## Prerequisites
 
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
 - Python 3.6+ (for conversion scripts)
 - Required Python packages: `pypandoc`, `python-dotenv`
+- Required LaTeX packages: `xurl`, `hyperref`, `draftwatermark`
 
 ## Getting Started
 
@@ -80,14 +83,16 @@ This repository helps you compile and produce academic papers in LaTeX, with a f
    - Edit `main.tex` for document-wide changes
    - Add custom LaTeX packages as needed
 
-## Troubleshooting
+### Troubleshooting
 
 - **Missing packages**: Install missing LaTeX packages using your distribution's package manager
 - **Build errors**: Check `main.log` for detailed error messages
+- **URL breaking issues**: If you encounter URL breaking problems, check the `\UrlBreaks` configuration in `main.tex`
 - **Markdown conversion issues**: Run the conversion script manually for debugging:
   ```bash
   python3 auto_transcribe_md_to_tex.py your_file.md
   ```
+- **Figure label errors**: Ensure figure labels contain only alphanumeric characters (no underscores or special characters)
 
 ## License
 
