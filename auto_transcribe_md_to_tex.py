@@ -325,9 +325,82 @@ def md_to_latex(md):
             # Convert [[text_content]] to \textbf{\textit{text_content}} for bold italics
             seg = re.sub(r'\[\[([^\]]+)\]\]', r'\\textbf{\\textit{\1}}', seg)
             
-            # Convert unordered lists
-            seg = re.sub(r'(^|\n)[ \t]*\* (.+)', r'\1\\begin{itemize}\n\\item \2', seg)
-            seg = re.sub(r'(\n\\item [^\n]+)+', lambda m: m.group(0) + '\n\\end{itemize}', seg)
+            # Process dash bullet points with more precise matching
+            # First handle the case with label: description format
+            seg = re.sub(r'(^|\n)[ \t]*-[ \t]*([^\n:]+):[ \t]*(.+)', r'\1\n\\noindent\\textbf{\2:} \3\n', seg)
+            
+            # Then handle regular dash bullet points (but avoid matching ones already processed)
+            seg = re.sub(r'(^|\n)[ \t]*-[ \t]*(?!\\noindent)(.+)', r'\1\n\\noindent \2\n', seg)
+            
+            # Convert special bullet points with labeled items first
+            # Pattern: "* Label: Description" with text following
+            labeled_pattern = r'(^|\n)\s*\*\s+([^\n:]+):\s*([^\n]+)(?:\n+([^\n*][^\n]+(?:\n+(?!\s*\*\s+)[^\n]+)*))?'
+            
+            def process_labeled_bullets(match):
+                prefix = match.group(1)
+                label = match.group(2).strip()
+                description = match.group(3).strip()
+                
+                # Check if there's following content
+                following_content = ""
+                if match.group(4):
+                    content_lines = []
+                    for line in match.group(4).strip().split('\n'):
+                        content_lines.append(line.strip())
+                    # Use simple indentation for content following bullet points
+                    content_text = ' '.join(content_lines)
+                    following_content = f"\n\n\\vspace{{0.5em}}\n\\noindent\\hspace{{2em}}{content_text}\n\\vspace{{0.5em}}\n"
+                
+                return f"{prefix}\\begin{{itemize}}\n\\item \\textbf{{{label}:}} {description}{following_content}\n\\end{{itemize}}\n"
+            
+            # Process labeled bullets
+            seg = re.sub(labeled_pattern, process_labeled_bullets, seg, flags=re.DOTALL)
+            
+            # Now handle regular bullet points with content following
+            regular_pattern = r'(^|\n)\s*\*\s+([^\n:][^\n]*)(?:\n+([^\n*][^\n]+(?:\n+(?!\s*\*\s+)[^\n]+)*))?'
+            
+            def process_regular_bullets(match):
+                prefix = match.group(1)
+                bullet_text = match.group(2).strip()
+                
+                # Check if there's following content
+                following_content = ""
+                if match.group(3):
+                    content_lines = []
+                    for line in match.group(3).strip().split('\n'):
+                        content_lines.append(line.strip())
+                    # Use simple indentation for content following bullet points
+                    content_text = ' '.join(content_lines)
+                    following_content = f"\n\n\\vspace{{0.5em}}\n\\noindent\\hspace{{2em}}{content_text}\n\\vspace{{0.5em}}\n"
+                
+                return f"{prefix}\\begin{{itemize}}\n\\item {bullet_text}{following_content}\n\\end{{itemize}}\n"
+            
+            # Process regular bullets
+            seg = re.sub(regular_pattern, process_regular_bullets, seg, flags=re.DOTALL)
+            
+            # We'll not add package declarations to section files as they can only go in the preamble
+            # Instead, we need to modify our approach to not rely on the enumitem package
+            # Convert description environments to use standard LaTeX formatting
+            
+            # Now handle regular bullet points that don't have additional paragraphs
+            simple_bullet_pattern = r'(^|\n)\s*\*\s+([^\n]+)(?!\n+(?!\s*\*\s+)[^\n]+)'
+            
+            def process_simple_bullet(match):
+                prefix = match.group(1)
+                bullet = match.group(2).strip()
+                
+                # If bullet has a label with colon, format it specially
+                if ':' in bullet and not bullet.startswith('\\'):
+                    label, desc = bullet.split(':', 1)
+                    return f"{prefix}\\begin{{itemize}}\n\\item \\textbf{{{label.strip()}:}} {desc.strip()}\n\\end{{itemize}}\n"
+                
+                # Regular bullet point
+                return f"{prefix}\\begin{{itemize}}\n\\item {bullet}\n\\end{{itemize}}\n"
+            
+            # Process simple bullet points
+            seg = re.sub(simple_bullet_pattern, process_simple_bullet, seg, flags=re.DOTALL)
+            
+            # No need to add packages in the middle of content
             # Convert bold and italics
             seg = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', seg)
             seg = re.sub(r'\*(.+?)\*', r'\\emph{\1}', seg)

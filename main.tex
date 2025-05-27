@@ -11,6 +11,10 @@
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{petri,positioning,arrows,automata,decorations.pathreplacing,shapes}
 
+% For proper abstract formatting in two-column layout
+\usepackage{abstract}
+\usepackage{changepage}
+
 % Improved URL and bibliography handling
 \usepackage[hyphens,spaces,obeyspaces]{xurl}  % Better URL breaking
 
@@ -81,7 +85,7 @@
 
 % Watermark for draft version
 \usepackage{draftwatermark}
-\SetWatermarkText{DRAFT VERSION 0.1.101}
+\SetWatermarkText{DRAFT VERSION 0.1.114}
 \SetWatermarkScale{0}
 \SetWatermarkColor[gray]{0.85}
 
@@ -109,36 +113,20 @@
 \renewcommand{\undertitle}{A Preprint}
 \renewcommand{\headeright}{arXiv:2025.12345v1}
 
+% Set document title and author
+\title{Pattern-Aware, Addition-Based Computation for\\Next-Generation AI}
+\author{Yohanes Surya\\AI Toba Project, IT Del\\Toba, Indonesia\\yohanes.surya@del.ac.id}
+
 % Use simple header/footer settings
 \pagestyle{fancy}
 \fancyhf{} % Clear all header/footer fields
-\fancyfoot[C]{\thepage} % Page number in center footer
-\fancyhead[C]{\shorttitle} % Short title in center header
-\fancyhead[R]{\headeright} % arXiv ID in right header
-\renewcommand{\headrulewidth}{0.4pt} % Line under the header
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{0pt}
+\rhead{\scshape \footnotesize \headeright}
+\chead{\shorttitle}
+\cfoot{\thepage}
 
 \begin{document}
-
-% Left margin watermark is applied through fancyhdr
-
-% Custom title page with author information
-\twocolumn[{
-  \begin{@twocolumnfalse}
-    \vspace*{-10pt}
-    \begin{center}
-      {\LARGE\bfseries Pattern-Aware, Addition-Based Computation for Next-Generation AI}\par
-      \vspace{1.5em}
-      % Display author information directly
-      {\large Yohanes Surya}\par
-      {\small\itshape AI Toba Project, IT Del}\par
-      {\small\itshape Toba, Indonesia}\par
-      {\small\itshape yohanes.surya@del.ac.id}\par
-    \end{center}
-    \vspace{10pt}
-    \hrule
-    \vspace{12pt}
-  \end{@twocolumnfalse}
-}]
 
 % Enable page numbering
 \pagestyle{plain}
@@ -147,9 +135,37 @@
 % Set column separation for better readability
 \setlength{\columnsep}{0.5in}
 
-% GASing Arithmetic: Enhanced Section Structure
-\section*{Abstract}
+% Temporarily switch to onecolumn for title and abstract
+\onecolumn
+
+% Create a more journal-like title
+\begin{center}
+\vspace*{-2cm}
+\rule{\textwidth}{0.4pt}
+\vspace{0.1cm}
+{\LARGE\textbf{Pattern-Aware, Addition-Based Computation for\\Next-Generation AI}}\\
+\vspace{0.5cm}
+\rule{\textwidth}{0.4pt}
+\vspace{0.5cm}
+{\normalsize\textbf{Yohanes Surya}}\\
+{\small AI Toba Project, IT Del}\\
+{\small Toba, Indonesia}\\
+{\small yohanes.surya@del.ac.id}\\
+\vspace{0.3cm}
+{\small May 27, 2025}\\
+\vspace{1cm}
+\end{center}
+
+% Abstract with full text width to match document width
+\begin{center}
+{\large\textbf{Abstract}}
+\end{center}
+\vspace{-0.3cm}
 \input{sections/abstract}
+\vspace{1cm}
+
+% Return to two-column layout
+\twocolumn
 
 \section{Introduction}
 \input{sections/introduction}
