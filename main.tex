@@ -61,28 +61,27 @@
 \usepackage{float}
 \usepackage{enumitem}
 
-% Simple approach for left margin watermark
+% Simplest possible approach for watermark
 \usepackage{rotating}
 \usepackage{eso-pic}
-\usepackage{color}
 
-% Define a simple, reliable left margin watermark
-\AddToShipoutPictureBG{%
-  \AtTextLowerLeft{%
-    \makebox[0pt][r]{%
-      \begin{minipage}[b]{1cm}%
-        \begin{turn}{90}%
-          \textcolor{black!40}{\fontsize{12pt}{14pt}\selectfont\bfseries\strut\quad arXiv:2025.12345v2 [cs.CL] \today\strut}%
-        \end{turn}%
-      \end{minipage}%
-      \hspace{5mm}%
+% Direct watermark positioning in the left margin
+\newcommand{\watermarktext}{arXiv:2025.12345v2 [cs.CL] \today}
+\AddToShipoutPictureFG{%
+  \AtPageCenter{%
+    \put(-0.48\paperwidth+20pt,0){%
+      \makebox(0,0)[c]{%
+        \rotatebox{90}{%
+          \textcolor{black!40}{\fontsize{18pt}{20pt}\selectfont\bfseries\watermarktext}%
+        }%
+      }%
     }%
   }%
 }
 
 % Watermark for draft version
 \usepackage{draftwatermark}
-\SetWatermarkText{DRAFT VERSION 0.1.91}
+\SetWatermarkText{DRAFT VERSION 0.1.99}
 \SetWatermarkScale{0}
 \SetWatermarkColor[gray]{0.85}
 
