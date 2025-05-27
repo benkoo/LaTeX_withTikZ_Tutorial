@@ -1,9 +1,14 @@
 import os
 import re
+import glob
 
 # Paths
-MD_FILE = os.path.join("..", "wip", "experiments", "GASing_Arithemtic.md")
+MD_FILE = os.path.join("..", "wip", "experiments", "GASing_Arithmetic.md")
 SECTIONS_DIR = "sections"
+IMAGES_DIR = "images"
+
+# Ensure images directory exists
+os.makedirs(IMAGES_DIR, exist_ok=True)
 
 # Helper: Convert a section title to a normalized filename
 def section_title_to_filename(title):
@@ -101,6 +106,92 @@ def clean_header_lines(text):
     
     return text
 
+def find_image_file(image_name):
+    """Find an image file in the images directory, case-insensitive"""
+    if not os.path.exists(IMAGES_DIR):
+        return None
+        
+    # Get all files in the images directory
+    image_files = glob.glob(os.path.join(IMAGES_DIR, '*'))
+    
+    # Try exact match first
+    for file_path in image_files:
+        if os.path.basename(file_path) == image_name:
+            return file_path
+    
+    # Try case-insensitive match
+    image_name_lower = image_name.lower()
+    for file_path in image_files:
+        if os.path.basename(file_path).lower() == image_name_lower:
+            return file_path
+    
+    return None
+
+def process_image_links(text):
+    """Process standard Markdown image links: ![Label](image.png)"""
+    def replace_image(match):
+        # Get the full match, label, and image path
+        full_match = match.group(0)
+        label = match.group(1).strip()
+        image_name = match.group(2).strip()
+        
+        if not image_name:
+            return full_match
+            
+        # Find the image file
+        image_file = find_image_file(image_name)
+        
+        if not image_file:
+            print(f"Warning: Image '{image_name}' not found in {IMAGES_DIR}")
+            return full_match
+            
+        try:
+            # Get the relative path from the LaTeX output directory to the image
+            output_dir = os.path.dirname(os.path.abspath('main.tex'))
+            rel_path = os.path.relpath(
+                os.path.abspath(image_file),
+                output_dir
+            )
+            
+            # Normalize path for LaTeX (forward slashes, no backslashes)
+            rel_path = rel_path.replace('\\', '/')
+            
+            # Remove the .tex extension if present (for the label)
+            base_name = os.path.splitext(os.path.basename(image_name))[0]
+            
+            # Create a very simple label - alphanumeric only, no special characters or underscores
+            # This ensures maximum compatibility with LaTeX's reference system
+            safe_label = re.sub(r'[^a-zA-Z0-9]', '', base_name).lower()
+            
+            # Use the label as the caption if provided, otherwise use filename
+            caption = label if label else base_name.replace('_', ' ').title()
+            
+            # Ensure the path is properly formatted for LaTeX
+            # - Replace backslashes with forward slashes
+            # - Don't escape underscores in the path (they're valid in filenames)
+            # - Remove any double slashes that might have been created
+            rel_path = rel_path.replace('\\', '/').replace('//', '/')
+            
+            # Create LaTeX figure environment with correct label formatting
+            # Ensure labels are safe for LaTeX - alphanumeric only, no special characters
+            # Use standard LaTeX naming conventions for labels
+            return (
+                '\n\\begin{figure}[H]\n'
+                '  \\centering\n'
+                f'  \\includegraphics[width=\\linewidth]{{{rel_path}}}\n'
+                f'  \\caption{{{caption}}}\n'
+                f'  \\label{{fig:{safe_label}}}\n'
+                '\\end{figure}\n'
+            )
+        except Exception as e:
+            print(f"Error processing image {image_name}: {str(e)}")
+            return full_match
+    
+    # Find all patterns like ![Label](image.png) with optional spaces
+    pattern = r'!\s*\[([^\]]*)\]\s*\(\s*([^)\s]+)\s*\)'
+    return re.sub(pattern, replace_image, text, flags=re.MULTILINE)
+
+
 def strip_section_numbering(header_text):
     """Remove numerical prefixes from section headers (e.g., '3.2 Introduction' becomes 'Introduction')"""
     # Pattern to match numerical prefixes like '3.', '3.2.1' at the beginning of a string
@@ -110,6 +201,9 @@ def strip_section_numbering(header_text):
 def md_to_latex(md):
     # Preprocessing: Clean up all header-related patterns
     md = clean_header_lines(md)
+    
+    # Process image links before other markdown processing
+    md = process_image_links(md)
     
     # Split into code and non-code segments
     segments = []

@@ -1,45 +1,47 @@
-\paragraph{Addition Algorithm}
+It is well known that certain primitives such as the NAND gate or the MOV instruction are considered the Universal Components in all Turing Complete decision machines. While these theoretical universality results are fundamental to computing, this article will focus specifically on how the addition operator can be adaptively executed based on available computing resources, serving as a practical foundation for higher-level reasoning. Moreover, efficient adders at the integrated circuit level, such as the Brent-Kung Adder, have proven to be highly efficient for addition operations in hardware implementations. However, based on different value pairs or value collections, there are still certain cases of arithmetic operations that could be executed with even fewer computing resources through pattern recognition and specialized implementations. These optimization opportunities, particularly for patterns like all-nines, power-of-ten, or sparse number representations, are the primary focus of this article and represent a complementary approach to hardware-level optimizations.
+\paragraph{Addition Algorithm as a Functorial Petri Net}
 
 The GASing addition algorithm processes numbers from left to right (most significant digit to least significant), a departure from the traditional right-to-left approach. This design choice is deliberate and offers several advantages rooted in computational efficiency and cognitive alignment, particularly when considering the broader goals of the GASing framework to minimize operational vocabulary and optimize resource consumption.
+\paragraph{Multi-Digit Numbers as Interconnected Automata}
 
-A key principle underpinning this algorithm is its explicit leverage of \textbf{n-ary arithmetic}. The algorithm is designed to be agnostic to the base of the numerical segments being processed. Whether the system operates in binary, tertiary, decimal, hexadecimal, or any other base (n-ary), the core logic of left-to-right processing with carry propagation remains consistent. This flexibility allows the system to adapt the granularity of its operations (i.e., the 'digit' size or segment length) to best fit resource consumption optimization schemes. For instance, the segment size can be chosen to align with the cache line size of a processor or the optimal block size for memory access, thereby minimizing latency and maximizing throughput for pre-calculated and stored intermediate results.
+A novel way to conceptualize the GASing approach is through the lens of \textbf{Functorial Petri Nets} ([[Functorial Petri Net]]), where each digit in a multi-digit number functions as a semi-autonomous cell within a larger network of computational agents. Under this framing:
 
-This adaptability is crucial for applying GASing principles to complex reasoning activities, potentially even those embedded within advanced AI architectures like the \textbf{Sparse Autoencoders (SAEs)} described in the \textit{\href{file://\/Users/bkoo/Documents/Development/AIProjects/GASing\_PKM/docs/references/ScalingMonoSemanticity.md}{ScalingMonoSemanticity.md}} paper. SAEs aim to decompose complex model activations into a sparse set of interpretable, monosemantic features. In essence, an SAE learns a large dictionary of these features, where only a small subset is active for any given input. This learned dictionary of features in an SAE can be seen as analogous to a highly optimized, distributed lookup table within the GASing framework. 
+1. \textbf{Digit Positions as Petri Net Places}: Each digit position in a multi-digit number corresponds to a discrete place in a Petri Net, capable of holding tokens that represent both the current digit value and potential carry/borrow states.
+
+2. \textbf{Arithmetic Operations as Transitions}: The fundamental arithmetic operations (particularly addition) manifest as transitions in the Petri Net that consume tokens from input places (operand digits) and produce tokens in output places (result digits and carries).
+
+3. \textbf{Carry/Borrow as Message Propagation}: The carry and borrow mechanisms essential to multi-digit arithmetic represent a formalized message-passing protocol between adjacent digit places. When a digit operation results in a value exceeding the base (e.g., 9+4=13 in decimal), a carry token is generated and propagated to the next significant digit place—a perfect example of resource-aware token flow characteristic of Petri Nets.
+
+4. \textbf{Compositionality Through Functors}: The functorial nature of this representation ensures that the compositional structure of arithmetic operations is preserved across different levels of abstraction. This means that complex arithmetic sequences can be formally derived from compositions of simpler operations while maintaining their algebraic properties.
+
+This Petri Net interpretation yields powerful insights into the GASing method's efficiency advantages:
+
+- \textbf{Concurrency Potential}: By analyzing the dependency structure between digit places, we can identify opportunities for concurrent processing. Digits not affected by carry chains can be computed independently, enabling parallelism.
+
+- \textbf{Adaptive Segmentation Through Net Morphisms}: The functorial properties allow us to define morphisms between different Petri Net configurations, formalizing how digit segments can be dynamically merged or split to optimize computational efficiency. These morphisms preserve the essential algebraic structure while enabling resource-adaptive execution.
+
+- \textbf{Pattern Recognition as Specialized Transitions}: Recurring patterns in digit configurations (such as all-nines or power-of-ten values) can be modeled as specialized transitions that bypass individual digit-by-digit processing, offering substantial performance benefits.
+
+The integration of GASing and Functorial Petri Nets reveals arithmetic as fundamentally a \textbf{distributed, asynchronous computation process}, where each digit place operates with relative autonomy yet remains coordinated through precisely defined message passing protocols. This perspective not only provides a rigorous mathematical foundation for the GASing method but also suggests novel optimization strategies derived from Petri Net theory's rich analytical tools.
+
+A key principle underpinning this algorithm is its explicit leverage of \textbf{n-ary arithmetic}. The algorithm is designed to be agnostic to the base of the numerical segments being processed. Whether the system operates in binary, tertiary, decimal, hexadecimal, or any other base (n-ary), the core logic of left-to-right processing with carry propagation remains consistent. This flexibility allows the system to adapt the granularity of its operations (i.e., the 'digit' size or segment length) to best fit resource consumption optimization schemes. For instance, the segment size can be chosen to align with the cache line size of a processor or the optimal block size for memory access, thereby minimizing latency and maximizing throughput for pre-calculated and stored intermediate results. \textbf{Critically, this optimization is specifically tailored to the resource requirements of the underlying hardware architecture}, enabling significant performance improvements when frequently-used digit pairs are identified and cached in lookup tables that match the machine's memory hierarchy.
+
+This adaptability is crucial for applying GASing principles to complex reasoning activities, potentially even those embedded within advanced AI architectures like the \textbf{Sparse Autoencoders (SAEs)} described in the "Scaling MonoSemanticity" paper. SAEs aim to decompose complex model activations into a sparse set of interpretable, monosemantic features. In essence, an SAE learns a large dictionary of these features, where only a small subset is active for any given input. This learned dictionary of features in an SAE can be seen as analogous to a highly optimized, distributed lookup table within the GASing framework. 
 
 The GASing addition algorithm, by being designed for flexible n-ary arithmetic and optimized segment processing, aligns well with such architectures. If the 'features' learned by an SAE can be mapped to or interact with the numerical segments processed by GASing, then the pre-calculated operations and lookup tables inherent in GASing could significantly enhance the efficiency and interpretability of these SAEs. The left-to-right processing allows for incremental computation and potential early termination if an approximate result suffices, which can be beneficial in resource-constrained environments or when dealing with the vast feature spaces of SAEs. Furthermore, by designing arithmetic operations that can be efficiently cached and retrieved, GASing can support the rapid activation and combination of these 'semantic features' in an SAE, effectively making the SAE a powerful, dynamic dictionary that GASing can interact with for reasoning tasks.
 
-The pseudo-code remains as a fundamental illustration:
+\textbf{The algorithm can dynamically accelerate computation when known digit pairs or patterns are detected}, adjusting its execution strategy based on the specific machine architecture in use. For example, performance can be dramatically improved (as demonstrated in our benchmarks showing up to 10x+ speedups for certain patterns) when retrieving content from optimally-structured lookup tables that match the CPU's cache hierarchy, memory access patterns, or SIMD capabilities. By incorporating fine-grained resource accounting at the level of the most primitive operation—addition—this approach provides the foundational mechanism for resource attribution and optimization in higher-level reasoning activities. This systematic accounting of computational resources, beginning at the elemental operation level, creates a transparent chain of resource utilization that extends seamlessly to complex symbolic processing, verification chains, and formal reasoning frameworks. The adaptive approach allows the algorithm to automatically exploit architectural features such as cache line prefetching, branch prediction, and specialized arithmetic units, delivering optimal performance across diverse computing environments without requiring manual tuning or specialized implementations.
 
-\begin{lstlisting}[language=Python,caption={GASing\_Addition Algorithm}]
-function GASing_Addition(a, b):
-    result = ""
-    carry = 0
-    
-    # Pad the shorter number with leading zeros
-    a = pad_with_zeros(a, len(b))
-    b = pad_with_zeros(b, len(a))
-    
-    # Process from left to right
-    for i in range(0, len(a)):
-        # Add digits and carry
-        digit_sum = int(a[i]) + int(b[i]) + carry
-        
-        # Determine new digit and carry
-        if digit_sum > 9:
-            carry = 1
-            digit = digit_sum - 10
-        else:
-            carry = 0
-            digit = digit_sum
-            
-        result += str(digit)
-    
-    # Add final carry if necessary
-    if carry > 0:
-        result += str(carry)
-        
-    return result
-\end{lstlisting}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{images/gasing\_addition\_single\_digit.png}
+  \caption{GASing single-digit addition}
+  \label{fig:gasingadditionsingledigit}
+\end{figure}
+
+
 
 This left-to-right, n-ary adaptable processing allows for:
 -   \textbf{Flexible Resource Optimization:} Tailoring segment size (n-ary base) to hardware (cache, memory) or task demands.
@@ -55,67 +57,15 @@ The GASing multiplication algorithm fundamentally extends the principles of the 
 
 Each cell in the conceptual grid represents the product of two individual digits (or segments, in n-ary arithmetic), which can be pre-calculated or retrieved from lookup tables, similar to single-digit additions. The core of the multiplication process then becomes the systematic summation of these grid values, column by column (or diagonal by diagonal, depending on the specific grid layout), applying the GASing addition algorithm (including its left-to-right carry propagation) to these intermediate sums. This effectively transforms multiplication into a series of additions, organized spatially by the grid.
 
-The pseudo-code below illustrates this grid-based summation concept:
+The following diagram illustrates this grid-based summation concept:
 
 
-
-\begin{lstlisting}[language=Python,caption={GASing\_Multiplication Algorithm}]
-function GASing_Multiplication(a, b):
-    # Initialize a grid to store partial products (results of single-digit multiplications)
-    # The dimensions of the grid depend on the number of digits/segments in a and b.
-    # For example, if a has M segments and b has N segments, grid is N x M.
-        
-    grid = initialize_partial_product_grid(a, b) # Each grid[i][j] = segment_b[i] * segment_a[j]
-        
-    # The core of multiplication is now to sum the values in this grid in a structured way.
-    # This can be visualized as summing diagonals or columns, applying GASing addition.
-    # For simplicity, imagine a function that collects these partial products and sums them
-    # using the previously defined GASing_Addition logic, managing carries appropriately.
-
-    final_product = "0"
-    # Iterate through the grid, treating each row (or shifted row) as a number to be added.
-    # This is a conceptual representation; actual implementation involves careful alignment and summation.
-    for i in range(len(b)):
-        partial_sum_for_row_i = "0"
-        for j in range(len(a)):
-            # Conceptually, each grid[i][j] contributes to a sum that is then added.
-            # A more direct approach involves summing diagonals or columns with carries.
-            # This step is a placeholder for the detailed grid summation logic.
-            # For instance, grid[i][j] is like (digit_b[i] * digit_a[j]) * 10^(position_factor)
-            # These terms are then summed up.
-            pass # Detailed grid summation logic would be here.
-
-    # A more accurate representation of grid summation:
-    # 1. Calculate all single-segment products: product_ij = segment_a[j] * segment_b[i]
-    # 2. Arrange these products in a grid, aligning them according to their place value.
-    # 3. Sum the columns of this grid using GASing_Addition, propagating carries.
-
-    # Example (conceptual): Summing diagonals of the grid of partial products
-    # result = sum_grid_diagonals_with_gasing_addition(grid)
-
-    # Simplified placeholder for the complex summation logic:
-    # Assume 'grid_to_result' performs the systematic addition of partial products
-    # according to GASing principles (left-to-right, carry management).
-    
-    result = perform_structured_addition_on_grid(grid, GASing_Addition_function_pointer)
-
-    return result
-
-# Helper function to demonstrate the addition algorithm
-def perform_structured_addition_on_grid(grid, addition_algorithm):
-    all_intermediate_sums = []
-    for i in range(len(grid)):
-        row_value_str = ""
-        for val in grid[i]: # Assuming grid[i] is a list of partial products
-            # Each row needs to be shifted appropriately before addition
-            shifted_row_value = row_value_str + "0" * i # Conceptual shift
-            all_intermediate_sums.append(shifted_row_value)
-
-        current_total = "0"
-    for num_str in all_intermediate_sums:
-        current_total = addition_algorithm(current_total, num_str)
-    return current_total
-\end{lstlisting}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{images/GridBasedMultiplication.png}
+  \caption{Grid Based Multiplication}
+  \label{fig:gridbasedmultiplication}
+\end{figure}
 
 
 The grid-based approach, when viewed as a structured application of the GASing addition algorithm, facilitates:
@@ -136,54 +86,7 @@ Subtraction in GASing is performed by adding the complement of the subtrahend. F
 - \textbf{N's Complement:} The n's complement of a number \texttt{b} with \texttt{k} digits in base \texttt{n} is \texttt{$(n^{k} - b)$}. A common way to compute this is by finding the (n-1)'s complement (subtracting each digit from \texttt{n-1}) and then adding 1 to the result.
 - \textbf{Process:} To compute \texttt{a - b}, GASing calculates \texttt{a + (n's complement of b)}. If an overflow carry occurs from the most significant digit, it is typically discarded (in fixed-width representations), and the remaining result is the positive difference. If no overflow occurs, the result is negative, and its true magnitude is the n's complement of the sum, often flagged appropriately.
 
-\begin{lstlisting}[language=Python,caption={GASing\_Subtraction Algorithm}]
-def GASing_Subtraction(a, b, base=10):
-    """
-    Perform subtraction using GASing's complemented addition approach.
-    a, b: Strings representing non-negative integers.
-    base: Integer base for the operation (default: 10).
-    Returns (result: str, is_negative: bool)
-    """
-    num_digits = max(len(a), len(b))
-    a_padded = pad_with_zeros(a, num_digits)
-    b_padded = pad_with_zeros(b, num_digits)
 
-    # (n-1)'s complement
-    b_complement_n_minus_1 = ''.join(str((base - 1) - int(d)) for d in b_padded)
-    # n's complement: add 1
-    one_str = pad_with_zeros("1", num_digits)
-    b_complement_n = GASing_Addition(b_complement_n_minus_1, one_str)
-
-    # Ensure correct length after addition
-    if len(b_complement_n) > num_digits and b_complement_n.startswith('1'):
-        b_complement_n = b_complement_n[1:]
-    else:
-        b_complement_n = pad_with_zeros(b_complement_n, num_digits)
-
-    # Add to minuend
-    sum_with_complement = GASing_Addition(a_padded, b_complement_n)
-
-    # Interpret result
-    if len(sum_with_complement) > num_digits and sum_with_complement.startswith('1'):
-        result = sum_with_complement[1:]
-        is_negative = False
-    else:
-        if sum_with_complement == pad_with_zeros("0", num_digits):
-            result = sum_with_complement
-            is_negative = False
-        else:
-            # Take n's complement for magnitude
-            temp_complement = ''.join(str((base - 1) - int(d)) for d in pad_with_zeros(sum_with_complement, num_digits))
-            result = GASing_Addition(temp_complement, one_str)
-            if len(result) > num_digits and result.startswith('1'):
-                result = result[1:]
-            else:
-                result = pad_with_zeros(result, num_digits)
-            is_negative = True
-    return result, is_negative
-\end{lstlisting}
-
-\emph{Helpers \texttt{$pad\_with\_{zeros}$} and \texttt{$GASing\_{Addition}$} are assumed to be defined elsewhere and base-aware.}
 
 ---
 \paragraph{Division as Repeated Subtraction (Repeated Complemented Addition)}
@@ -192,39 +95,6 @@ Division, in its most fundamental GASing form, is conceptualized as repeated sub
 
 - \textbf{Process:} To compute \texttt{a / b}, GASing repeatedly subtracts \texttt{b} (the divisor) from \texttt{a} (the dividend) using the \texttt{$GASing\_{Subtraction}$} method. The number of successful subtractions before \texttt{a} becomes less than \texttt{b} (or zero) constitutes the quotient. The final value of \texttt{a} after these subtractions is the remainder.
 - \textbf{Optimization:} While simple repeated subtraction can be inefficient, GASing allows for optimizations. These can include subtracting multiples of \texttt{b} (e.g., \texttt{10\emph{b}, \texttt{100}b}), similar to long division, or leveraging pattern recognition to estimate parts of the quotient more quickly. However, even these optimized steps are ultimately resolved through sequences of the core \texttt{$GASing\_{Subtraction}$} (and therefore \texttt{$GASing\_{Addition}$}) operations.
-
-\begin{lstlisting}[language=Python,caption={GASing\_Division Algorithm}]
-def GASing_Division(dividend, divisor, base=10):
-    """
-    Perform division using repeated GASing_Subtraction.
-    dividend, divisor: Strings representing non-negative integers.
-    base: Integer base for the operation (default: 10).
-    Returns (quotient: str, remainder: str)
-    """
-    if divisor == pad_with_zeros("0", len(divisor)):
-        return "Error: Division by zero"
-    quotient = "0"
-    current_dividend = dividend
-    one = pad_with_zeros("1", len(quotient))
-
-    # Comparison helper assumed: is_greater_or_equal(num1, num2)
-    while is_greater_or_equal(current_dividend, divisor):
-        subtraction_result, is_neg = GASing_Subtraction(current_dividend, divisor, base)
-        if is_neg:
-            break
-        current_dividend = subtraction_result
-        quotient = GASing_Addition(quotient, one)
-        # Adjust padding for growing quotient
-        if len(quotient) > len(one):
-            one = pad_with_zeros("1", len(quotient))
-        elif len(one) > len(quotient):
-            quotient = pad_with_zeros(quotient, len(one))
-
-    remainder = current_dividend
-    return quotient, remainder
-\end{lstlisting}
-
-\emph{Helpers \texttt{$pad\_with\_{zeros}$}, \texttt{$GASing\_{Addition}$}, and \texttt{$is\_greater\_or\_{equal}$} are assumed to be defined and base-aware.}
 
 ---
 
