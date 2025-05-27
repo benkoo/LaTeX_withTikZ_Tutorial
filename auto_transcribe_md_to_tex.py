@@ -322,6 +322,9 @@ def md_to_latex(md):
                 # Remove any standalone closing braces at the start of lines
                 # (these are likely leftover from previous processing)
                 seg = re.sub(r'^}\s*$', '', seg, flags=re.MULTILINE)
+            # Convert [[text_content]] to \textbf{\textit{text_content}} for bold italics
+            seg = re.sub(r'\[\[([^\]]+)\]\]', r'\\textbf{\\textit{\1}}', seg)
+            
             # Convert unordered lists
             seg = re.sub(r'(^|\n)[ \t]*\* (.+)', r'\1\\begin{itemize}\n\\item \2', seg)
             seg = re.sub(r'(\n\\item [^\n]+)+', lambda m: m.group(0) + '\n\\end{itemize}', seg)

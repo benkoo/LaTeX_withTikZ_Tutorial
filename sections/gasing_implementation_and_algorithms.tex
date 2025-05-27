@@ -4,7 +4,7 @@ It is well known that certain primitives such as the NAND gate or the MOV instru
 The GASing addition algorithm processes numbers from left to right (most significant digit to least significant), a departure from the traditional right-to-left approach. This design choice is deliberate and offers several advantages rooted in computational efficiency and cognitive alignment, particularly when considering the broader goals of the GASing framework to minimize operational vocabulary and optimize resource consumption.
 \paragraph{Multi-Digit Numbers as Interconnected Automata}
 
-A novel way to conceptualize the GASing approach is through the lens of \textbf{Functorial Petri Nets} ([[Functorial Petri Net]]), where each digit in a multi-digit number functions as a semi-autonomous cell within a larger network of computational agents. Under this framing:
+A novel way to conceptualize the GASing approach is through the lens of \textbf{Functorial Petri Nets} (\textbf{\textit{Functorial Petri Net}}), where each digit in a multi-digit number functions as a semi-autonomous cell within a larger network of computational agents. Under this framing:
 
 1. \textbf{Digit Positions as Petri Net Places}: Each digit position in a multi-digit number corresponds to a discrete place in a Petri Net, capable of holding tokens that represent both the current digit value and potential carry/borrow states.
 
