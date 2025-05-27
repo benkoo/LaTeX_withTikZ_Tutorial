@@ -48,7 +48,9 @@ This repository helps you compile and produce academic papers in LaTeX, with a f
 2. **Build the document**
    ```bash
    make clean    # Optional: Clean previous builds
-   make          # Build the PDF
+   make          # Build the PDF using the original conversion script
+   # OR
+   make all_refactored # Build the PDF using the new refactored conversion script
    ```
    The output will be `main.pdf`
 
@@ -109,4 +111,3 @@ This project is intended for academic and educational use. Please adapt and exte
 This paper and repository explicitly use information, examples, and diagram code from the [TikZ.dev](https://tikz.dev) website. We thank the TikZ.dev authors and community for providing high-quality documentation and inspiration for TikZ graphics.
 
 For questions or contributions, please open an issue or submit a pull request.
-```
