@@ -1,0 +1,134 @@
+% TikZ wiring diagram macros and styles from Spivak_Fong.tex (for use in other documents)
+% Extracted for use in main.tex and figures/clock_with_display.tex
+
+% TikZ libraries (make sure you load tikz and these libraries in your main doc)
+\usetikzlibrary{
+	cd,
+	math,
+	decorations.markings,
+	decorations.pathreplacing,
+	positioning,
+	arrows.meta,
+	circuits.logic.US,
+	shapes,
+	calc,
+	fit,
+	quotes}
+
+% Macros
+\newcommand{\tn}{\textnormal}
+\newcommand{\inp}[1]{#1^{\tn{in}}}
+\newcommand{\outp}[1]{#1^{\tn{out}}}
+\newcommand{\upd}[1]{#1^{\tn{upd}}}
+\newcommand{\rdt}[1]{#1^{\tn{rdt}}}
+
+% Wiring diagram styles
+\tikzset{
+   oriented WD/.style={%everything after equals replaces "oriented WD" in key.
+      every to/.style={out=0,in=180,draw},
+      label/.style={
+         font=\everymath\expandafter{\the\everymath\scriptstyle},
+         inner sep=0pt,
+         node distance=2pt and -2pt},
+      semithick,
+      node distance=1 and 1,
+      decoration={markings, mark=at position \stringdecpos with \stringdec},
+      ar/.style={postaction={decorate}},
+      execute at begin picture={\tikzset{
+         x=\bbx, y=\bby,
+         every fit/.style={inner xsep=\bbx, inner ysep=\bby}}}
+      },
+   string decoration/.store in=\stringdec,
+   string decoration={\arrow{stealth};},
+   string decoration pos/.store in=\stringdecpos,
+   string decoration pos=.7,
+   bbx/.store in=\bbx,
+   bbx = 1.5cm,
+   bby/.store in=\bby,
+   bby = 1.5ex,
+   bb port sep/.store in=\bbportsep,
+   bb port sep=1.5,
+   bb port length/.store in=\bbportlen,
+   bb port length=4pt,
+   bb penetrate/.store in=\bbpenetrate,
+   bb penetrate=0,
+   bb min width/.store in=\bbminwidth,
+   bb min width=1cm,
+   bb rounded corners/.store in=\bbcorners,
+   bb rounded corners=2pt,
+   bb small/.style={bb port sep=1, bb port length=2.5pt, bbx=.4cm, bb min width=.4cm, bby=.7ex},
+   bb medium/.style={bb port sep=1, bb port length=2.5pt, bbx=.4cm, bb min width=.4cm, bby=.9ex},
+   bb/.code 2 args={%When you see this key, run the code below:
+      \pgfmathsetlengthmacro{\bbheight}{\bbportsep * (max(#1,#2)+1) * \bby}
+      \pgfkeysalso{draw,minimum height=\bbheight,minimum width=\bbminwidth,outer sep=0pt,
+         rounded corners=\bbcorners,thick,
+         prefix after command={\pgfextra{\let\fixname\tikzlastnode}},
+         append after command={\pgfextra{\draw
+            \ifnum #1=0{} \else foreach \i in {1,...,#1} {
+               ($ (\fixname.north west)!{\i/(#1+1)}!(\fixname.south west) $)+( -\bbportlen,0)
+               coordinate (\fixname_in\i) -- +(\bbpenetrate,0) coordinate (\fixname_in\i')}
+            \fi
+            %Define the endpoints of tickmarks
+            \ifnum #2=0{} \else foreach \i in {1,...,#2} {
+               ($ (\fixname.north east)!{\i/(#2+1)}!(\fixname.south east) $)+( -\bbpenetrate,0)
+               coordinate (\fixname_out\i') -- +(\bbportlen,0) coordinate (\fixname_out\i)}
+            \fi;
+         }}}},
+   bb name/.style={append after command={\pgfextra{\node[anchor=north] at (\fixname.north) {#1};}}}
+}
+
+% Additional unoriented WD styles (optional, but harmless)
+\tikzset{
+  unoriented WD/.style={
+     every to/.style={draw},
+     shorten <=-\penetration, shorten >=-\penetration,
+     label distance=-2pt,
+     thick,
+     node distance=\spacing,
+     execute at begin picture={\tikzset{
+        x=\spacing, y=\spacing}}
+     },
+  pack size/.store in=\psize,
+  pack size = 8pt,
+  spacing/.store in=\spacing,
+  spacing = 8pt,
+  link size/.store in=\lsize,
+  link size = 2pt,
+  penetration/.store in=\penetration,
+  penetration = 2pt,
+  pack color/.store in=\pcolor,
+  pack color = blue,
+  pack inside color/.store in=\picolor,
+  pack inside color=blue!20,
+  pack outside color/.store in=\pocolor,
+  pack outside color=blue!50!black,
+  surround sep/.store in=\ssep,
+  surround sep=8pt,
+  link/.style={
+     circle, 
+     draw=black, 
+     fill=black,
+     inner sep=0pt, 
+     minimum size=\lsize
+  },
+  pack/.style={
+     circle, 
+     draw = \pocolor, 
+     fill = \picolor,
+     inner sep = .25*\psize,
+     minimum size = \psize
+  },
+  outer pack/.style={
+     ellipse, 
+     draw,
+     inner sep=\ssep,
+     color=\pocolor,
+  },
+  intermediate pack/.style={
+     ellipse,
+     dashed, 
+     draw,
+     inner sep=\ssep,
+     color=\pocolor,
+  },
+}
