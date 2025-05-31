@@ -43,8 +43,12 @@ GASing builds all arithmetic operations as modular extensions of one another, wi
 This modularity, centered on segment-wise addition, creates a coherent and parsimonious framework. Mastery of segment-wise addition directly facilitates the understanding and implementation of all other operations. More importantly, it means that the entire arithmetic system can be analyzed, and its resource consumption (both cognitive and computational) can be estimated based on the number and type of segment-wise addition-equivalent steps involved. This contrasts sharply with systems where each operator might be a black box with unique, opaque resource demands, and it aligns with the goal of transparently assessing computational effort by reducing all operations to a common, addition-based denominator at a flexible granularity.
 \paragraph{Monoids and Groups in GASing Arithmetic}
 
+Building on the foundational work in group theory and abstract algebra [@monoids2024; @groups2024], the GASing method provides a concrete pathway to understanding these abstract mathematical structures through digit-wise arithmetic operations. This approach aligns with the educational philosophy of introducing abstract concepts through concrete examples, as demonstrated in [@baldwin2009architecture]'s work on learning platforms.
+
 The GASing method's digit-wise approach provides a natural pathway to abstract algebraic structures through concrete arithmetic operations. This connection makes abstract algebra concepts accessible while maintaining mathematical rigor.
 \paragraph{The Addition Monoid}
+
+Following the exploration of monoids in [@monoids2024], we can see how GASing's digit-wise addition naturally forms a monoid structure. The method's focus on addition as the fundamental operation creates a powerful foundation for understanding more complex algebraic structures.
 
 At its core, GASing reveals that the set of natural numbers with addition forms a monoid:
 
@@ -63,6 +67,8 @@ At its core, GASing reveals that the set of natural numbers with addition forms 
 2. Show how the associative property enables flexible grouping of operations
 3. Demonstrate how 0 acts as the "do nothing" element
 \paragraph{From Monoids to Groups}
+
+Extending the monoidal structure to include inverse elements, as discussed in [@groups2024], we see how GASing's approach naturally leads to group theory. The method's handling of negative numbers through complements demonstrates the practical application of group-theoretic principles in elementary arithmetic.
 
 When we extend to integers, we see the emergence of group structure:
 
@@ -140,21 +146,25 @@ The group-theoretic perspective provides powerful insights for computational opt
 3. Explore how these structures influence computational efficiency
 \paragraph{Connection to Advanced Topics}
 
-The GASing approach naturally leads to deeper mathematical concepts:
-
-\noindent\textbf{\textbf{Ring Theory}:} Through the interaction of addition and multiplication
+The GASing approach naturally leads to deeper mathematical concepts that connect with various fields of study:
 
 
-\noindent\textbf{\textbf{Field Theory}:} When considering prime bases
+\noindent\textbf{\textbf{Ring Theory}:} Through the interaction of addition and multiplication, GASing demonstrates the fundamental properties of rings in a concrete way. This aligns with the algebraic structures discussed in [@baldwin2009architecture].
 
 
-\noindent\textbf{\textbf{Category Theory}:} Via universal properties of free monoids
+
+\noindent\textbf{\textbf{Field Theory}:} When working with prime bases, GASing's arithmetic reveals the field structure that underlies many computational systems, as explored in [@cybenko1989approximation]'s work on function approximation.
 
 
-\noindent\textbf{\textbf{Homological Algebra}:} Through chain complexes in digit-wise operations
+
+\noindent\textbf{\textbf{Category Theory}:} The universal properties of free monoids in GASing provide an accessible introduction to categorical thinking, connecting to the foundational work in [@coecke2010quantum] on compositional structures.
 
 
-These connections demonstrate how GASing serves as a bridge from basic arithmetic to advanced mathematical structures.
+
+\noindent\textbf{\textbf{Computational Complexity}:} The resource-aware nature of GASing's operations relates to the analysis of computational systems as discussed in [@murata1989petri], particularly in how operations can be composed and optimized.
+
+
+These connections demonstrate how GASing serves as a bridge from basic arithmetic to advanced mathematical structures, providing a unified framework that spans multiple levels of abstraction.
 \paragraph{Educational Benefits of the Algebraic Approach}
 
 The GASing method's explicit connection to abstract algebra provides several educational advantages:

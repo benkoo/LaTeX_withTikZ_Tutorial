@@ -198,12 +198,71 @@ def strip_section_numbering(header_text):
     # followed by a space and the actual section title
     return re.sub(r'^(\d+(\.\d+)*)\s+(.+)$', r'\3', header_text)
 
+def replace_unicode_math_symbols(text):
+    """Replace Unicode mathematical symbols with their LaTeX equivalents"""
+    # Common mathematical symbols
+    math_symbols = {
+        'ℕ': '\\mathbb{N}',  # Natural numbers
+        'ℤ': '\\mathbb{Z}',  # Integers
+        'ℚ': '\\mathbb{Q}',  # Rational numbers
+        'ℝ': '\\mathbb{R}',  # Real numbers
+        'ℂ': '\\mathbb{C}',  # Complex numbers
+        '∈': '\\in',         # Element of
+        '∉': '\\notin',      # Not an element of
+        '∩': '\\cap',        # Intersection
+        '∪': '\\cup',        # Union
+        '⊆': '\\subseteq',   # Subset or equal
+        '⊂': '\\subset',     # Proper subset
+        '⊇': '\\supseteq',   # Superset or equal
+        '⊃': '\\supset',     # Proper superset
+        '∅': '\\emptyset',   # Empty set
+        '∀': '\\forall',     # For all
+        '∃': '\\exists',     # Exists
+        '∄': '\\nexists',    # Does not exist
+        '∞': '\\infty',      # Infinity
+        '≠': '\\neq',        # Not equal
+        '≤': '\\leq',        # Less than or equal
+        '≥': '\\geq',        # Greater than or equal
+        '≈': '\\approx',     # Approximately equal
+        '≡': '\\equiv',      # Equivalent
+        '∑': '\\sum',        # Summation
+        '∏': '\\prod',       # Product
+        '√': '\\sqrt',       # Square root
+        '∫': '\\int',        # Integral
+        '∂': '\\partial',    # Partial derivative
+        '∇': '\\nabla',      # Nabla/Del operator
+        '⊕': '\\oplus',      # Direct sum
+        '⊗': '\\otimes',     # Tensor product
+        '±': '\\pm',         # Plus-minus
+        '∓': '\\mp',         # Minus-plus
+        '→': '\\rightarrow', # Right arrow
+        '←': '\\leftarrow',  # Left arrow
+        '↔': '\\leftrightarrow', # Left-right arrow
+        '⇒': '\\Rightarrow', # Implies
+        '⇐': '\\Leftarrow',  # Is implied by
+        '⇔': '\\Leftrightarrow', # If and only if
+    }
+    
+    # Replace each Unicode symbol with its LaTeX equivalent
+    for symbol, replacement in math_symbols.items():
+        # Only replace within math environments (between $ signs)
+        parts = re.split(r'(\$[^\$]*\$)', text)
+        for i in range(1, len(parts), 2):  # Only check math parts
+            if symbol in parts[i]:
+                parts[i] = parts[i].replace(symbol, replacement)
+        text = ''.join(parts)
+    
+    return text
+
 def md_to_latex(md):
     # Preprocessing: Clean up all header-related patterns
     md = clean_header_lines(md)
     
-    # Process image links before other markdown processing
+    # Handle images (with proper handling for positioning and caption text)
     md = process_image_links(md)
+    
+    # Replace Unicode math symbols with LaTeX equivalents
+    md = replace_unicode_math_symbols(md)
     
     # Split into code and non-code segments
     segments = []
@@ -414,75 +473,114 @@ def md_to_latex(md):
             latex_parts.append(seg)
     return ''.join(latex_parts)
 
-# Extract all top-level sections (##) and their content
-def extract_sections(md):
-    # Find all top-level sections (## ...), capturing their content until the next top-level section
-    section_pattern = r'^##\s+(.+?)\n([\s\S]*?)(?=^##\s+|\Z)'
-    matches = re.finditer(section_pattern, md, flags=re.MULTILINE)
-    sections = {}
-    for match in matches:
-        title = match.group(1).strip()
-        content = match.group(2).strip()
-        filename = section_title_to_filename(title)
-        sections[filename] = {'title': title, 'content': content}
-    return sections
-
-# Write each section to a .tex file
-def write_sections(sections):
-    if not os.path.exists(SECTIONS_DIR):
-        os.makedirs(SECTIONS_DIR)
-    for filename, sec in sections.items():
-        out_path = os.path.join(SECTIONS_DIR, filename)
-        latex = md_to_latex(sec['content'])
-        with open(out_path, 'w') as f:
-            f.write(latex)
-        print(f"Wrote {out_path} ({len(latex)} chars)")
-
-if __name__ == "__main__":
-    with open(MD_FILE, 'r') as f:
-        md = f.read()
-    sections = extract_sections(md)
-    write_sections(sections)
-    print(f"Processed {len(sections)} sections.")
-
-# Extract main sections and their subsections
 def extract_sections(content):
+    """Extract all sections from markdown content based solely on heading levels.
+    
+    This function follows a purely syntax-based approach, looking for Markdown headings
+    at the top level (## heading) and extracting their content.
+    
+    Args:
+        content (str): The markdown content to process
+        
+    Returns:
+        dict: Dictionary mapping filenames to section data with title, content, and filename
+    """
+    # First, normalize line endings
+    content = content.replace('\r\n', '\n')
+    
+    # Find all level 2 headings (## headings) in the document
+    # This regex pattern matches lines starting with ## followed by the heading text
+    h2_pattern = r'^##\s+(.+?)$'
+    h2_matches = list(re.finditer(h2_pattern, content, flags=re.MULTILINE))
+    
     sections = {}
     
-    # Special extraction for Computational Advantages section with all its subsections
-    comp_adv_pattern = r'## 5\. Computational Advantages\s*\n([\s\S]*?)(?=## 6\.)'    
-    comp_adv_match = re.search(comp_adv_pattern, content)
-    if comp_adv_match:
-        full_content = comp_adv_match.group(1).strip()
-        sections['computational advantages'] = {
-            'content': full_content,
-            'filename': 'computational_advantages.tex'
-        }
-        print(f"Found complete computational advantages section with {len(full_content)} characters")
-    
-    # For remaining sections, use the standard pattern
-
-    sections = {}
-    
-    # Dynamically extract all top-level sections (## ...) and their content
-    section_pattern = r'^##\s+(.+?)\n([\s\S]*?)(?=^##\s+|\Z)'
-    matches = re.finditer(section_pattern, content, flags=re.MULTILINE)
-    sections = {}
-    for match in matches:
+    # For each heading, extract the content between it and the next heading
+    for i, match in enumerate(h2_matches):
+        # Get section title
         title = match.group(1).strip()
-        content = match.group(2).strip()
-        filename = section_title_to_filename(title)
+        
+        # Get start position of content (right after this heading's line)
+        content_start = match.end() + 1
+        
+        # Get end position of content (start of next heading or end of document)
+        if i < len(h2_matches) - 1:
+            content_end = h2_matches[i+1].start()
+        else:
+            content_end = len(content)
+        
+        # Extract section content
+        section_content = content[content_start:content_end].strip()
+        
+        # Generate clean filename from section title
+        # We need to match the exact expected filenames in main.tex
+        raw_filename = title.lower()
+        
+        # Special case for section 6 which should always be "pedagogical_applications.tex"
+        if title.startswith('6.') and 'pedagogical applications' in raw_filename:
+            filename = 'pedagogical_applications.tex'
+            print(f"Using standard filename for section 6: {filename}")
+        else:
+            # Standard case for other sections
+            # Extract the base name without section numbers
+            base_name = re.sub(r'^\d+(\.\d+)*\s+', '', raw_filename)
+            
+            # Special cases for known sections to match main.tex expectations
+            known_sections = {
+                'introduction': 'introduction.tex',
+                'foundational principles': 'foundational_principles.tex',
+                'gasing implementation and algorithms': 'gasing_implementation_and_algorithms.tex',
+                'performance benchmarking': 'performance_benchmarking.tex',
+                'computational advantages': 'computational_advantages.tex',
+                'future directions and discussion': 'future_directions_and_discussion.tex',
+                'conclusion': 'conclusion.tex',
+                'abstract': 'abstract.tex'
+            }
+            
+            # Check if this is a known section
+            for known_title, known_filename in known_sections.items():
+                if known_title in base_name:
+                    filename = known_filename
+                    break
+            else:
+                # Default case: generate from title
+                filename = re.sub(r'[^a-z0-9]+', '_', base_name)
+                filename = re.sub(r'_+', '_', filename).strip('_') + '.tex'
+        
+        # Store section information
         sections[filename] = {
             'title': title,
-            'content': content,
+            'content': section_content,
             'filename': filename
         }
-        print(f"Found section: {title} (filename: {filename}, {len(content)} chars)")
+        
+        print(f"Found section: {title} (filename: {filename}, {len(section_content)} chars)")
     
     return sections
+
+# This function is no longer used - consolidated into process_sections
+# Kept for backward compatibility with existing code
+def write_sections(sections):
+    """Write sections to LaTeX files (legacy function).
+    
+    This function is maintained for backward compatibility.
+    New code should use process_sections instead.
+    
+    Args:
+        sections (dict): Dictionary of sections with content and filenames
+    """
+    process_sections(sections)
 
 # Process sections and write to files
 def process_sections(sections):
+    """Process sections and write them to LaTeX files with backup.
+    
+    Args:
+        sections (dict): Dictionary of sections with content and filenames
+    """
+    if not os.path.exists(SECTIONS_DIR):
+        os.makedirs(SECTIONS_DIR)
+        
     for section_title, section_data in sections.items():
         content = section_data['content']
         filename = section_data['filename']
@@ -507,12 +605,15 @@ def process_sections(sections):
             
         print(f"Updated {filename} from section '{section_title}'")
 
-# Read markdown file
-with open(MD_FILE, 'r') as f:
-    content = f.read()
-
-# Extract sections from Markdown content
-sections = extract_sections(content)
-
-# Process and write sections to LaTeX files
-process_sections(sections)
+if __name__ == "__main__":
+    # Read markdown file
+    with open(MD_FILE, 'r') as f:
+        content = f.read()
+    
+    # Extract sections from Markdown content
+    sections = extract_sections(content)
+    
+    # Process and write sections to LaTeX files
+    process_sections(sections)
+    
+    print(f"Processed {len(sections)} sections.")
